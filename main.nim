@@ -1,3 +1,22 @@
+
+
+
+
+
+
+
+
+
+
+
+
+TEMP DISABLE TO RUN SOME COMMANDS
+
+
+
+
+
+
 #   CMPS3111 Programming Project 2
 #   Due Date 28/10/2021
 
@@ -25,6 +44,13 @@ proc grammar() =
 
 
 
+ 
+
+
+#[
+
+
+
 
 #state of the program to keep running
 var status = true
@@ -42,3 +68,63 @@ while status:
     
     if input == "GRAMMAR":
         grammar()
+
+
+
+
+        ]#
+
+
+
+
+echo "Hello World"
+
+
+
+#Show the command to the screen
+echo "Input the grammar to start the process; type "HELP" to see all commands!"
+
+
+#Get the command from the User
+
+
+#Generic variable structure is 
+# var <name>: <type>
+# var <name>: <type> = <value>
+
+
+# Main body loop to process commands
+
+
+var status = true #rename?
+
+while status:
+
+  #Grab the user input
+  var grammar : string = readLine(stdin)
+
+
+  case grammar
+  of "EXIT":
+    echo "Leave the program"
+    status = false
+
+  of "HELP":
+    echo "Generating command"
+    
+
+
+
+
+  else:
+    echo "ASSUME THE COMMAND"
+
+
+#end of while
+
+
+
+
+
+echo "BYE BYE"
+
