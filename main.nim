@@ -1,24 +1,6 @@
-
-
-
-
-
-
-
-
-
-
-
-
-TEMP DISABLE TO RUN SOME COMMANDS
-
-
-
-
-
-
 #   CMPS3111 Programming Project 2
 #   Due Date 28/10/2021
+import strutils
 
 #Printing Grammar 
 proc grammar() =
@@ -27,7 +9,7 @@ proc grammar() =
     echo "========       BNF Grammar        ========"
     echo "------------------------------------------"
     echo "\n"
-    echo "\t  <shapes> → go<commands> stop"
+    echo "\t  <shapes> → go <commands> stop"
     echo "\t<commands> → <draw>"
     echo "\t            |<draw> , <commands>"
     echo "\t    <draw> → rec <xy> . <xy>"
@@ -37,27 +19,26 @@ proc grammar() =
     echo "\t            | fill <x> . <y>"
     echo "\t      <xy> → <x> . <y>"
     echo "\t       <x> → a|b|c|d|e|f|g|h|i"
-    echo "\t       <y> → 1|2|3|4|5|6|7|8|9"
+    echo "\t       <x> → 1|2|3|4|5|6|7|8|9"
     echo "\n"
     echo "------------------------------------------"
     echo "Commands: EXIT (To end the program), GRAMMAR (View BNF Grammar)"
 
+#end of grammer
+
+ #Display BNF Grammar
+grammar() #makes it display once on start up 
 
 
- 
-
-
-#[
-
-
+   
 
 
 #state of the program to keep running
 var status = true
 
 while status:
-    #Display BNF Grammar
-    grammar()
+
+
     #User input Command
     echo "\n\nCommand: "
     let input = readLine(stdin)
@@ -65,66 +46,15 @@ while status:
     if input == "EXIT":
         echo "Exiting Program"
         break
+
+    elif input == "exit":
+        echo "ERROR: exit in UPPERCASE only"
     
-    if input == "GRAMMAR":
+    elif input == "GRAMMAR":
         grammar()
 
-
-
-
-        ]#
-
-
-
-
-echo "Hello World"
-
-
-
-#Show the command to the screen
-echo "Input the grammar to start the process; type "HELP" to see all commands!"
-
-
-#Get the command from the User
-
-
-#Generic variable structure is 
-# var <name>: <type>
-# var <name>: <type> = <value>
-
-
-# Main body loop to process commands
-
-
-var status = true #rename?
-
-while status:
-
-  #Grab the user input
-  var grammar : string = readLine(stdin)
-
-
-  case grammar
-  of "EXIT":
-    echo "Leave the program"
-    status = false
-
-  of "HELP":
-    echo "Generating command"
+    elif input.startsWith("go") == true and input.endsWith("stop") == true :
+        echo "Thing to do Here!"
     
-
-
-
-
-  else:
-    echo "ASSUME THE COMMAND"
-
-
-#end of while
-
-
-
-
-
-echo "BYE BYE"
-
+    else:
+        echo "ERROR: Invalid Command" 
