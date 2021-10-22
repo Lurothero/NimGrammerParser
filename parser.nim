@@ -7,7 +7,7 @@ import std/strutils
 proc removeWhiteSpaces(input: string) : string
 
 
-
+proc printArray(arr : seq[string])
 
 
 #Pass in the string from the user
@@ -38,7 +38,10 @@ proc removeWhiteSpaces(input: string) : string =
   for tokens in processString.splitWhitespace():
     echo '"', tokens, '"'
 
+    toArray.add(tokens)
 
+
+  printArray(toArray)
 
   return "done"
 
@@ -47,6 +50,32 @@ proc removeWhiteSpaces(input: string) : string =
 
 
 
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#TEMP FUNCTIONS
+
+proc printArray(arr : seq[string])=
+
+  for i in arr:
+    echo "Element: ", i
 
 
 
