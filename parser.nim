@@ -2,7 +2,7 @@
 import std/strutils
 
 
-var currentPos : int 
+var currentPos : int = 0
 
 
 
@@ -102,10 +102,57 @@ proc toCharArray (getString : string) : seq[char]=
 
 
   discard buildingBack(charArray)
-
   # return charArray
 
 #end of toCharArray
+
+#[
+
+Idea Note:
+================
+
+Using the current position 
+
+call a func that checks pos 0 and 1 , return a string that combined the chars. pos must be tracked 
+
+
+pos already moved
+if pos  = r,t,c,a,f
+
+then move to their appropriate code block to process the rest of the string
+
+eg after detecting r the program should build e and c (throw errors that doenst match)
+
+
+if the next position = a to i then add to a string and concat the next string if its 1-7
+
+if its a . (period) then we should call back the same prev function recursively 
+
+
+this should generate the middle command if done properly
+
+
+we either check to see if the next part is end or another command 
+
+if another command then we call back the command checker function 
+
+
+if it says ends then you made it through and we call our grammar decom, parse tree and generate the graphic
+
+
+
+
+
+
+]#
+
+
+
+
+
+
+
+
 
 
 
@@ -117,18 +164,72 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
   var savedString : seq[string] 
 
 
+
+
+
+
+  #check for Go
+
+
+
+
+
+
+  #check for Command
+
+
   while currentPos <= charArr.len()-1 :
 
+
+
+
+
+
+
+
+
+  #Check for Go
+
+
+
+
+
     var str : string
+
 
     str = "testing" & " " & $currentPos
     savedString.add $str
 
+    inc currentPos
 
-    echo "testing" , " " , currentPos
-    currentPos = currentPos + 1
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  echo savedString
   return savedString
+
+
+
+
+
+
 
 
 
