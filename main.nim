@@ -1,22 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-TEMP DISABLE TO RUN SOME COMMANDS
-
-
-
-
-
-
 #   CMPS3111 Programming Project 2
 #   Due Date 28/10/2021
 
@@ -43,49 +25,13 @@ proc grammar() =
     echo "Commands: EXIT (To end the program), GRAMMAR (View BNF Grammar)"
 
 
+grammar()
 
- 
-
-
-#[
-
-
-
-
-#state of the program to keep running
-var status = true
-
-while status:
-    #Display BNF Grammar
-    grammar()
-    #User input Command
-    echo "\n\nCommand: "
-    let input = readLine(stdin)
-
-    if input == "EXIT":
-        echo "Exiting Program"
-        break
-    
-    if input == "GRAMMAR":
-        grammar()
-
-
-
-
-        ]#
-
-
-
-
-echo "Hello World"
 
 
 
 #Show the command to the screen
-echo "Input the grammar to start the process; type "HELP" to see all commands!"
-
-
-#Get the command from the User
+echo "Input the grammar to start the process; type \"HELP\" to see all commands!"
 
 
 #Generic variable structure is 
@@ -94,7 +40,6 @@ echo "Input the grammar to start the process; type "HELP" to see all commands!"
 
 
 # Main body loop to process commands
-
 
 var status = true #rename?
 
@@ -111,19 +56,15 @@ while status:
 
   of "HELP":
     echo "Generating command"
+
+  of "GRAMMAR":
+    grammar()
     
-
-
-
-
   else:
     echo "ASSUME THE COMMAND"
 
 
 #end of while
-
-
-
 
 
 echo "BYE BYE"
