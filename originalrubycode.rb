@@ -12,22 +12,12 @@ class BeginProgram
 
 #Grab the input from the user
 def getInput
-
-
-
-
   puts "ENTER GRAMMER RULE"
   @@inputGrammer = gets
   #puts @@inputGrammer
-
-
-
-  
   toArray
 
 end #end of getInput method
-
-
 
 #save the string input from the user
 def toArray

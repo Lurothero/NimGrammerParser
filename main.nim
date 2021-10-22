@@ -1,8 +1,12 @@
 
+
+include parser
+
+
 #   CMPS3111 Programming Project 2
 #   Due Date 28/10/2021
 
-#Printing Grammar 
+#Printing Grammar aa
 proc grammar() =
     echo "\n"
     echo "------------------------------------------"
@@ -62,6 +66,7 @@ while status:
     
   else:
     echo "ASSUME THE COMMAND"
+    getInput(grammar)
 
 
 #end of while
