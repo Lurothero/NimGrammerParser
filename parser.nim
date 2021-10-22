@@ -1,6 +1,11 @@
 #Imports 
 import std/strutils
 
+
+var currentPos : int 
+
+
+
 #main parser starts here
 
 #foward declaration
@@ -16,6 +21,9 @@ proc joiner (toJoin : seq[string]) : string
 
 
 proc toCharArray (getString : string) : seq[char]
+
+proc buildingBack (charArr : seq[char]) : seq[string] 
+
 
 
 #Pass in the string from the user
@@ -90,14 +98,37 @@ proc toCharArray (getString : string) : seq[char]=
   for i in charArray:
     echo i
 
+
+
+
+  discard buildingBack(charArray)
+
+  # return charArray
+
 #end of toCharArray
 
 
 
 
+proc buildingBack (charArr : seq[char]) : seq[string] =
+
+  currentPos  = 0
+
+  var savedString : seq[string] 
 
 
+  while currentPos <= charArr.len()-1 :
 
+    var str : string
+
+    str = "testing" & " " & $currentPos
+    savedString.add $str
+
+
+    echo "testing" , " " , currentPos
+    currentPos = currentPos + 1
+
+  return savedString
 
 
 
