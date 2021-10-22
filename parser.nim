@@ -10,13 +10,17 @@ proc removeWhiteSpaces(input: string) : string
 proc printArray(arr : seq[string])
 
 
+
+proc joiner (toJoin : seq[string]) : string
+
+
 #Pass in the string from the user
 proc getInput(input : string ) : void =
   echo "You Typed ", input
 
   #discard is used to process a function for its purpose and ignoring the return value.
-  discard removeWhiteSpaces(input)
 
+  discard removeWhiteSpaces(input)
 #end of getInput
 
 
@@ -24,7 +28,6 @@ proc getInput(input : string ) : void =
 #Start manipulate the string 
 
 #getting rid of white spaces 
-
 proc removeWhiteSpaces(input: string) : string =
 
   #Create a sequence (this version of empty arr)
@@ -35,22 +38,40 @@ proc removeWhiteSpaces(input: string) : string =
   var processString : string = input
 
 
+  #Add the parts into the array
   for tokens in processString.splitWhitespace():
-    echo '"', tokens, '"'
-
     toArray.add(tokens)
 
-
+  #FOR DEBUGGING PURPOSES
   printArray(toArray)
 
+
+  echo joiner(toArray)
+
+
   return "done"
-
-
 #end of removeWhiteSpaces
 
 
 
-#
+
+#EXPERIMENT TOKENIZING FOR REAL
+
+
+
+
+proc joiner (toJoin : seq[string]):string =
+
+  var holdThisStringForMePlz : string
+
+  for each in toJoin:
+    holdThisStringForMePlz.add $each
+
+  return holdThisStringForMePlz
+#end of tokenizer
+
+
+
 
 
 
