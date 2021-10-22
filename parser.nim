@@ -52,6 +52,7 @@ proc removeWhiteSpaces(input: string) : string =
 
   echo joiner(toArray)
 
+  discard toCharArray(joiner(toArray))
 
   return "done"
 #end of removeWhiteSpaces
@@ -75,13 +76,19 @@ proc joiner (toJoin : seq[string]):string =
 #end of tokenizer
 
 
+
+
+
+
 proc toCharArray (getString : string) : seq[char]= 
 
   var charArray : seq[char] = @[]
 
-
-
-
+  for each in cast[seq[char]](getString):
+    charArray.add $each
+  
+  for i in charArray:
+    echo i
 
 #end of toCharArray
 
