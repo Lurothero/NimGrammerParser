@@ -14,6 +14,10 @@ proc printArray(arr : seq[string])
 proc joiner (toJoin : seq[string]) : string
 
 
+
+proc toCharArray (getString : string) : seq[char]
+
+
 #Pass in the string from the user
 proc getInput(input : string ) : void =
   echo "You Typed ", input
@@ -71,15 +75,15 @@ proc joiner (toJoin : seq[string]):string =
 #end of tokenizer
 
 
+proc toCharArray (getString : string) : seq[char]= 
+
+  var charArray : seq[char] = @[]
 
 
 
 
 
-
-
-
-
+#end of toCharArray
 
 
 
