@@ -164,7 +164,9 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
   var savedString : seq[string] 
 
 
+  #check to see if go 
 
+  
 
 
 
@@ -180,19 +182,7 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
 
   while currentPos <= charArr.len()-1 :
 
-
-
-
-
-
-
-
-
   #Check for Go
-
-
-
-
 
     var str : string
 
@@ -201,26 +191,6 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
     savedString.add $str
 
     inc currentPos
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   echo savedString
   return savedString
