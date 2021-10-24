@@ -36,7 +36,8 @@ proc getInput(input : string ) : void =
 
 
 
-
+  currentPos = 0 
+  savedString = @[]
 
 
   discard removeWhiteSpaces(input)
@@ -171,9 +172,6 @@ if it says ends then you made it through and we call our grammar decom, parse tr
 
 proc buildingBack (charArr : seq[char]) : seq[string] =
 
-  currentPos  = 0
-
-
 
   if charArr[currentPos] == 'g' and currentPos < charArr.len()-1 :
     echo "Starts with G"
@@ -193,6 +191,10 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
       #we call another function to check what is in between
 
       checkCmd(charArr,currentPos)
+
+      echo "Do we pop back here???"
+      echo savedString
+
 
     else:
       echo "Error at pos: ", currentPos+1, "Failed the second letter"
@@ -246,12 +248,6 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
           echo savedString
 
 
-        
-
-
-
-
-
         else:
           echo "Unknown char at pos: ",currentPos+1," Did you mean \'rec\' you were 1 letter off"
 
@@ -276,6 +272,46 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
     of 's':
       echo "Assuming stop"
+      inc currentPos
+
+      if charArr[currentPos] == 't':
+        echo "Getting warmer"
+        inc currentPos
+
+        if charArr[currentPos] == 'o':
+          echo "Getting warmer"
+          inc currentPos
+
+
+          if charArr[currentPos] == 'p' and currentPos == charArr.len()-1:
+
+            savedString.add $"stop"
+
+
+            echo "If you are here then you made it into the end of the program"
+
+            echo "Pretend the parser, tree and graphic are generated here"
+            
+            echo "THIS IS THE ARRAY POS: ", currentPos
+
+          elif charArr[currentPos] != 'p':
+            echo "Error at pos: ", currentPos+1," Maybe a typo?? "
+
+          elif currentPos != charArr.len()-1:
+            echo "Error at pos: ",currentPos+1," command continued but should be terminated!"
+
+          else:
+
+            echo "Error at pos: ",currentPos+1," did you mistyped???"
+
+
+
+
+
+
+      #we need to make sure that the stop is the completely last element 
+
+
 
       
 
