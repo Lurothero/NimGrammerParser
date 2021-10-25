@@ -10,35 +10,21 @@ var savedString : seq[string] = @[]
 
 #foward declaration
 proc removeWhiteSpaces(input: string) : string
-
-
-proc printArray(arr : seq[string])
-
-
-
 proc joiner (toJoin : seq[string]) : string
-
-
-
 proc toCharArray (getString : string) : bool
-
 proc buildingBack (charArr : seq[char]) : seq[string] 
-
 proc checkCmd (charArr : seq[char],currentPosIndex : int)
-
 proc processRecCommand(charArr : seq[char],currentPosIndex : int)
+proc processTriCommand(charArr : seq[char],currentPosIndex : int)
+proc processCirCommand(charArr : seq[char],currentPosIndex : int) 
+proc processAxesCommand(charArr : seq[char],currentPosIndex : int) 
+proc processFillCommand(charArr : seq[char],currentPosIndex : int)
 
 #Pass in the string from the user
 proc getInput(input : string ) : void =
-  echo "You Typed ", input
-
-  #discard is used to process a function for its purpose and ignoring the return value.
-
-
-
+  
   currentPos = 0 
   savedString = @[]
-
 
   discard removeWhiteSpaces(input)
 #end of getInput
@@ -63,24 +49,14 @@ proc removeWhiteSpaces(input: string) : string =
     toArray.add(tokens)
 
   #FOR DEBUGGING PURPOSES
-  printArray(toArray)
 
-
-  echo joiner(toArray)
-
+  discard joiner(toArray)
   discard toCharArray(joiner(toArray))
 
   return "done"
 #end of removeWhiteSpaces
 
-
-
-
-#EXPERIMENT TOKENIZING FOR REAL
-
-
-
-
+#Joins the string in a single char sequence
 proc joiner (toJoin : seq[string]):string =
 
   var holdThisStringForMePlz : string
@@ -91,18 +67,12 @@ proc joiner (toJoin : seq[string]):string =
   return holdThisStringForMePlz
 #end of tokenizer
 
-
-
-
-
-
 proc toCharArray (getString : string) : bool = 
 
   #if true then throw an error
   if isEmptyOrWhitespace(getString) :
 
-    echo "Error at pos: 0 Grammer is empty!"
-
+    echo "ERROR! YOUR INPUT CANNOT BE EMPTY"
     return false 
 
   else:
@@ -111,96 +81,29 @@ proc toCharArray (getString : string) : bool =
 
     for each in cast[seq[char]](getString):
       charArray.add $each
-  
-    for i in charArray:
-      echo i
+
     discard buildingBack(charArray)
-  # return charArray
 
 #end of toCharArray
-
-#[
-
-Idea Note:
-================
-
-Using the current position 
-
-call a func that checks pos 0 and 1 , return a string that combined the chars. pos must be tracked 
-
-
-pos already moved
-if pos  = r,t,c,a,f
-
-then move to their appropriate code block to process the rest of the string
-
-eg after detecting r the program should build e and c (throw errors that doenst match)
-
-
-if the next position = a to i then add to a string and concat the next string if its 1-7
-
-if its a . (period) then we should call back the same prev function recursively 
-
-
-this should generate the middle command if done properly
-
-
-we either check to see if the next part is end or another command 
-
-if another command then we call back the command checker function 
-
-
-if it says ends then you made it through and we call our grammar decom, parse tree and generate the graphic
-
-
-
-
-
-
-]#
-
-
-
-
-
-
-
-
-
 
 
 
 proc buildingBack (charArr : seq[char]) : seq[string] =
 
-
   if charArr[currentPos] == 'g' and currentPos < charArr.len()-1 :
-    echo "Starts with G"
 
     inc currentPos
 
     if charArr[currentPos] == 'o' and currentPos < charArr.len()-1 :
-      echo "Has go"
-
-      #if we made it here then we have go
-
+     
       savedString.add $"go"
-
-      echo savedString
-
-
-      #we call another function to check what is in between
-
       checkCmd(charArr,currentPos)
 
-      echo "Do we pop back here???"
-      echo savedString
-
-
     else:
-      echo "Error at pos: ", currentPos+1, "Failed the second letter"
+      echo "Error at pos: ", currentPos+1, " Did you mean \'go\'?"
 
   else:
-    echo "Error at pos: ", currentPos+1," Failing at the first letter"
+    echo "Error at pos: ", currentPos+1," type '\go'\ to get started  "
 
   #check for Command
   return savedString
@@ -208,83 +111,125 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
 
 proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
-
   echo charArr
-
-
   currentPos = currentPosIndex
 
   #check to see if the next starts a valid command
   inc currentPos
 
   if currentPos < charArr.len()-1 :
-    echo "Valid lenght go on"
-    echo charArr[currentPos]
-
 
     case charArr[currentPos]
 
 
-    of 'r':
-      echo "Assuming rec"
+    of 'r':  
       inc currentPos
 
       if charArr[currentPos] == 'e':
-        echo "Getting warmer"
         inc currentPos
 
         if charArr[currentPos] == 'c':
-          echo "You typed rec"
           savedString.add $"rec"
           inc currentPos
           #call to process rec command
           processRecCommand(charArr,currentPos)
 
-          echo "did we return back here"
-          echo "What is our current pos? : ",currentPos
-
-
-          echo "Lets see if the grammer gets saved"
-          echo savedString
-
-
         else:
           echo "Unknown char at pos: ",currentPos+1," Did you mean \'rec\' you were 1 letter off"
-
-
-
-
-
       else:
         echo "Unknown char at pos: ",currentPos+1," Did you mean \'rec\'"
 
-
     of 't':
-      echo "Assuming tri"
+      inc currentPos
+
+      if charArr[currentPos] == 'r':
+        inc currentPos
+
+        if charArr[currentPos] == 'i':
+
+          savedString.add $"tri"
+          inc currentPos
+          #call to process tri command
+          processTriCommand(charArr,currentPos) 
+        else:            
+          echo "Unknown char at pos: ",currentPos+1," Did you mean \'tri\' you were 1 letter off"
+      else:
+        echo "Unknown char at pos: ",currentPos+1," Did you mean \'tri\'"
+
+
     of 'c':
-      echo "Assuming cir"
+
+      inc currentPos
+
+      if charArr[currentPos] == 'i':
+        inc currentPos
+
+        if charArr[currentPos] == 'r':
+          savedString.add $"cir"
+          inc currentPos
+                    #call to process rec command
+          processCirCommand(charArr,currentPos) #//CHANGE THIS 
+
+        else:            
+          echo "Unknown char at pos: ",currentPos+1," Did you mean \'cir\' you were 1 letter off"
+
+      else:
+        echo "Unknown char at pos: ",currentPos+1," Did you mean \'cir\'"
+
     of 'a':
-      echo "Assuming axes"
+      inc currentPos
+
+      if charArr[currentPos] == 'x':
+        inc currentPos
+
+        if charArr[currentPos] == 'e':
+          inc currentPos
+
+          if charArr[currentPos] == 's':  
+            savedString.add $"axes"
+            inc currentPos
+                  #call to process rec command
+            processAxesCommand(charArr,currentPos) #//CHANGE THIS 
+
+          else:            
+            echo "Unknown char at pos: ",currentPos+1," Did you mean \'axes\' you were 1 letter off"
+        else:
+          echo "Unknown char at pos: ",currentPos+1," Did you mean \'axes\'"
+      else:
+        echo "Unknown char at pos: ",currentPos+1
+
     of 'f':
-      echo "Assuming fill"
+      inc currentPos
 
+      if charArr[currentPos] == 'i':
+        inc currentPos
 
+        if charArr[currentPos] == 'l':
+          inc currentPos
 
+          if charArr[currentPos] == 'l':            
+            savedString.add $"axes"
+            inc currentPos
+                    #call to process rec command
+            processFillCommand(charArr,currentPos) #//CHANGE THIS 
+          else:
+            echo "Error at pos: ",currentPos+1," missed last letter on fill?"
+        else:
+          echo "Error at pos: ",currentPos+1," missed third letter on fill?"
+      else:
+        echo "Error at pos: ",currentPos+1," missed second letter on fill?"
+      
     of 's':
-      echo "Assuming stop"
       inc currentPos
 
       if charArr[currentPos] == 't':
-        echo "Getting warmer"
         inc currentPos
 
         if charArr[currentPos] == 'o':
-          echo "Getting warmer"
           inc currentPos
 
 
           if charArr[currentPos] == 'p' and currentPos == charArr.len()-1:
-
             savedString.add $"stop"
 
 
@@ -301,30 +246,15 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
             echo "Error at pos: ",currentPos+1," command continued but should be terminated!"
 
           else:
-
             echo "Error at pos: ",currentPos+1," did you mistyped???"
-
-
-
-
-
-
-      #we need to make sure that the stop is the completely last element 
-
-
-
-      
-
-
 
     else:
       echo "Error at pos: ",currentPos+1," unknown command"
 
   else:
-
     echo "Error at pos: ", currentPos+1 ,"Reached the end of the command but should be more to process..."
 
-
+#Process for rec command validation
 proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
   currentPos = currentPosIndex
@@ -338,51 +268,27 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
     if "abcdefghi".contains(charArr[currentPos]):
       recStringCmd = recStringCmd & charArr[currentPos]
-      echo "This is a test for recString: ", recStringCmd
-      echo recStringCmd
-
       inc currentPos
 
 
       if "123456789".contains(charArr[currentPos]):
         recStringCmd = recStringCmd & charArr[currentPos]
-        echo "This is a test for recString: ", recStringCmd
-        echo recStringCmd
-
         inc currentPos
 
 
         if ".".contains(charArr[currentPos]):
           recStringCmd = recStringCmd & charArr[currentPos]
-          echo "This is a test for recString: ", recStringCmd
-          echo recStringCmd
-
           inc currentPos
 
           if "abcdefghi".contains(charArr[currentPos]):
             recStringCmd = recStringCmd & charArr[currentPos]
-            echo "This is a test for recString: ", recStringCmd
-            echo recStringCmd
-
             inc currentPos
 
             if "123456789".contains(charArr[currentPos]):
               recStringCmd = recStringCmd & charArr[currentPos]
-              echo "This is a test for recString: ", recStringCmd
-              echo recStringCmd
-
-
-              echo "IF UR HERE THEN WE SHOULD PASS ALL THE CHECKS SO"
-
-              echo "THE FINAL RESULT : ", recStringCmd
-
-
               savedString.add recStringCmd
-
               checkCmd(charArr,currentPos)
               # call back the cmd checker
-
-
 
             else:
               echo "Error at pos: ",currentPos+1," Should be 1 - 9"
@@ -398,28 +304,217 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
     #Close first
     else:
-
       echo "Error at pos: ",currentPos+1," Should be a to i"
 
 #fails the size check
   else:
+    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
 
+
+proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
+
+  currentPos = currentPosIndex
+
+  #We need to build the string that will construct the command
+  var triStringCmd : string =""
+
+
+  if currentPos < charArr.len()-1 :
+
+
+    if "abcdefghi".contains(charArr[currentPos]):
+      triStringCmd = triStringCmd & charArr[currentPos]
+      inc currentPos
+
+
+      if "123456789".contains(charArr[currentPos]):
+        triStringCmd = triStringCmd & charArr[currentPos]
+        inc currentPos
+
+
+        if ".".contains(charArr[currentPos]):
+          triStringCmd = triStringCmd & charArr[currentPos]
+          inc currentPos
+
+          if "abcdefghi".contains(charArr[currentPos]):
+            triStringCmd = triStringCmd & charArr[currentPos]
+            inc currentPos
+
+
+            if "123456789".contains(charArr[currentPos]):
+              triStringCmd = triStringCmd & charArr[currentPos]
+              inc currentPos
+
+
+              if ".".contains(charArr[currentPos]):
+                triStringCmd = triStringCmd & charArr[currentPos]
+                inc currentPos
+
+                if "abcdefghi".contains(charArr[currentPos]):
+                  triStringCmd = triStringCmd & charArr[currentPos]
+                  inc currentPos
+                
+
+                  if "123456789".contains(charArr[currentPos]):
+                    triStringCmd = triStringCmd & charArr[currentPos]
+                    savedString.add triStringCmd
+                    checkCmd(charArr,currentPos)
+
+                  else:
+                    echo "Error at pos: ", currentPos+1, " Unknown in the eighth position"
+                else:
+                  echo "Error at pos: ", currentPos+1, " Unknown in the seventh position"
+              else:
+                echo "Error at pos: ", currentPos+1, " Unknown in the sixth position"
+            else:
+              echo "Error at pos: ", currentPos+1, " Unknown in the fifth position"
+          else:
+            echo "Error at pos: ", currentPos+1, " Unknown in the fourth position"
+        else:
+          echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+      else:
+        echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+    else:
+      echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+        
+  #fails the size check
+  else:
+    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
+
+
+#Process for rec command validation
+proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
+
+  currentPos = currentPosIndex
+
+#We need to build the string that will construct the command
+  var cirStringCmd : string =""
+
+
+  if currentPos < charArr.len()-1 :
+
+
+    if "abcdefghi".contains(charArr[currentPos]):
+      cirStringCmd = cirStringCmd & charArr[currentPos]
+      inc currentPos
+
+
+      if "123456789".contains(charArr[currentPos]):
+        cirStringCmd = cirStringCmd & charArr[currentPos]
+        inc currentPos
+
+
+        if ".".contains(charArr[currentPos]):
+          cirStringCmd = cirStringCmd & charArr[currentPos]
+          inc currentPos
+
+          if "abcdefghi".contains(charArr[currentPos]):
+            cirStringCmd = cirStringCmd & charArr[currentPos]
+            inc currentPos
+
+            if "123456789".contains(charArr[currentPos]):
+              cirStringCmd = cirStringCmd & charArr[currentPos]
+              savedString.add cirStringCmd
+              checkCmd(charArr,currentPos)
+              # call back the cmd checker
+
+            else:
+               echo "Error at pos: ", currentPos+1, " Unknown in the fifth position"
+          else:
+             echo "Error at pos: ", currentPos+1, " Unknown in the fourth position"
+        else:
+           echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+      else:
+         echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+    else:
+       echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+
+#fails the size check
+  else:
     echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
 
 
 
+
+
+
+
+
+
+
+proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
+
+  currentPos = currentPosIndex
+
+#We need to build the string that will construct the command
+  var axesStringCmd : string =""
+
+
+  if currentPos < charArr.len()-1 :
+
+
+    if "abcdefghi".contains(charArr[currentPos]):
+      axesStringCmd = axesStringCmd & charArr[currentPos]
+      inc currentPos
+
+
+      if ".".contains(charArr[currentPos]):
+        axesStringCmd = axesStringCmd & charArr[currentPos]
+        inc currentPos
   
-    #we must now process the command 
+
+        if "123456789".contains(charArr[currentPos]):
+          axesStringCmd = axesStringCmd & charArr[currentPos]
+          savedString.add axesStringCmd
+          checkCmd(charArr,currentPos)
+              # call back the cmd checker
+
+        else:
+           echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+      else:
+         echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+    else:
+       echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+       
+#fails the size check
+  else:
+    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
 
 
-#TEMP FUNCTIONS
 
-proc printArray(arr : seq[string])=
+proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
 
-  for i in arr:
-    echo "Element: ", i
+  currentPos = currentPosIndex
 
-
-
+#We need to build the string that will construct the command
+  var fillStringCmd : string =""
 
 
+  if currentPos < charArr.len()-1 :
+
+
+    if "abcdefghi".contains(charArr[currentPos]):
+      fillStringCmd = fillStringCmd & charArr[currentPos]
+      inc currentPos
+
+
+      if ".".contains(charArr[currentPos]):
+        fillStringCmd = fillStringCmd & charArr[currentPos]
+        inc currentPos
+  
+
+        if "123456789".contains(charArr[currentPos]):
+          fillStringCmd = fillStringCmd & charArr[currentPos]
+          savedString.add fillStringCmd
+          checkCmd(charArr,currentPos)
+              # call back the cmd checker
+        else:
+           echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+      else:
+         echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+    else:
+       echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+       
+#fails the size check
+  else:
+    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
