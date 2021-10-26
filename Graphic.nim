@@ -1,14 +1,15 @@
+# for pixie library to work, 
+#go to shell and type: nimble install pixie
 import pixie
 import strutils
 import std/math
-import std/[strformat]
+#import std/[strformat]
 
 let image = newImage(511, 511)
 image.fill(rgb(255, 255, 255))
-var flag = false
 
 #########################################################################
-#Draw grid lines with a scale of 16 (512x512) and a point/dot in the center
+#Draw grid lines with a scale of 16 (512x512) and point/dot in the center
 proc drawGrid()=
   let linePath = newPath()
   let pointPath = newPath()
@@ -28,14 +29,15 @@ proc drawGrid()=
     linePath.lineTo(512.0,series)
     linePath.moveTo(series, 0.0)
     linePath.lineTo(series, 512.0) 
-
+  
+  #create the x and y axes 
   axesPath.moveTo(256.0, 0)
   axesPath.lineTo(256.0, 512.0)
   axesPath.moveTo(0, 256.0)
   axesPath.lineTo(512.0, 256.0)
   
-  #color lines rgb(153, 255, 153)  rgb(0, 230, 0) rgb(204, 255, 204)
-  lineImage.strokePath(linePath, rgb(204, 255, 204))
+  #color lines rgb(153, 255, 153)  rgb(0, 230, 0) rgb(204, 255, 204),rgb(127, 250, 188) rgb(175, 252, 214)
+  lineImage.strokePath(linePath, rgb(127, 250, 188))
   axesImage.strokePath(axesPath, rgb(0, 0, 102))
 
   #Creates a dot in the center of the graph
@@ -61,8 +63,9 @@ proc drawCircle(x, y, x2, y2: float)=
     ry = radius
 
   let circlePath = newPath()
-  let pointPath = newPath()
+  let centerPath = newPath()
   let linePath = newPath()
+  let pointPath = Path()
   
   #creates and draws a line from center (x, y) to the vertex (x2, y2)
   linePath.moveTo(cx, cy)
@@ -78,7 +81,13 @@ proc drawCircle(x, y, x2, y2: float)=
   image.draw(circleImage)
 
   #Creates and draw a point on the graph marking center of circle
-  pointPath.ellipse(cx, cy, 4.0, 4.0)
+  centerPath.ellipse(cx, cy, 3.0, 3.0)
+  let centerImage = newImage(511, 511)
+  centerImage.fillPath(centerPath, rgb(0, 0, 102))  
+  image.draw(centerImage)
+
+  #Creates and draw a point on the graph marking center of circle
+  pointPath.ellipse(x2, y2, 3.0, 3.0)
   let pointImage = newImage(511, 511)
   pointImage.fillPath(pointPath, rgb(0, 0, 102))  
   image.draw(pointImage)
@@ -199,11 +208,16 @@ proc drawAxes(xy: string)=
   elif xy[1] == '1':    
     image.fillText(font.typeset("1", vec2(180, 180)), translate(vec2(236, 102)))
 
+  #writes x and y on the x and y axis
+  image.fillText(font.typeset("x", vec2(180, 180)), translate(vec2(496, 260)))
+  image.fillText(font.typeset("y", vec2(180, 180)), translate(vec2(236, 8)))
 
 ######################################################
 #Draws rectangle given two vertices
 proc drawRectangle(x1, y1, x2, y2: float)=  
   let rectPath = newPath()
+  let p1Path = Path()
+  let p2Path = Path()
   let
     rex = x1
     rey = y1
@@ -211,6 +225,19 @@ proc drawRectangle(x1, y1, x2, y2: float)=
     reh = y2-y1
     clockwise = true 
 
+  #creates the first vertex used
+  p1Path.ellipse(x1, y1, 3.0, 3.0)
+  let p1Image = newImage(511, 511)
+  p1Image.fillPath(p1Path, rgb(0, 0, 102))  
+  image.draw(p1Image)
+
+  #creates the second vertex used
+  p2Path.ellipse(x2, y2, 3.0, 3.0)
+  let p2Image = newImage(511, 511)
+  p2Image.fillPath(p2Path, rgb(0, 0, 102))  
+  image.draw(p2Image)
+
+  #alternative way to draw rectangle
   #let ctx = newContext(image)
   #ctx.fillStyle = rgb(255, 0, 0)
   #ctx.lineWidth = 5
@@ -246,7 +273,7 @@ proc drawTriangle(x, y, x2, y2, x3, y3: float)=
 
   image.draw(lineImage)
 
-################################################################
+######################################
 #Converts the vertices inputted from user to graph scale (pixel)
 proc convertToPixel(vertex, axes: string): float=
   var xval = 272.0   
@@ -272,65 +299,60 @@ proc convertToPixel(vertex, axes: string): float=
         return ynew      
       yval = yval - yminus
 
-#########################################################
-#subpgram that accepts one command
-proc processGraphic(cmd, xy, xy2, xy3: string)=  
-  if flag == false:
-    drawGrid()
-   
-  if cmd == "rec":
-    let x1 = convertToPixel(xy, "x")
-    let y1 = convertToPixel(xy, "y")
-    let x2 = convertToPixel(xy2, "x")
-    let y2 = convertToPixel(xy2, "y")
-    drawRectangle(x1, y1, x2, y2) 
-  elif cmd == "tri":
-    let x1 = convertToPixel(xy, "x")
-    let y1 = convertToPixel(xy, "y")
-    let x2 = convertToPixel(xy2, "x")
-    let y2 = convertToPixel(xy2, "y")
-    let x3 = convertToPixel(xy3, "x")
-    let y3 = convertToPixel(xy3, "y") 
-    drawTriangle(x1, y1, x2, y2, x3, y3)
-  elif cmd == "cir":
-    let x1 = convertToPixel(xy, "x")
-    let y1 = convertToPixel(xy, "y")
-    let x2 = convertToPixel(xy2, "x")
-    let y2 = convertToPixel(xy2, "y")
-    drawCircle(x1, y1, x2, y2) 
-  elif cmd == "axes":        
-    drawAxes(xy)
-
-  if(flag == false):
-    image.writeFile("graphic.png") 
-
-###############################################
-#second suprogram that accepts two command
-proc processGraphic(cmd, xy, xy2, xy3, cmd2, ab, ab2, ab3: string) =
-  flag = true
+###########################################################
+#subpgram that accepts array of strings containing commands
+proc processGraphic(arr: seq[string])= 
   drawGrid()
-  processGraphic(cmd, xy, xy2, xy3)
-  processGraphic(cmd2, ab, ab2, ab3)
+  for i in 0..arr.len-1:
+    if arr[i] == "axes":      
+      var temp = arr[i+1]
+      var xy = $temp[0..1]  
+      drawAxes(xy)
+      if arr[i+2] == "stop":
+        break  
+    elif arr[i] == "rec":      
+      var temp = arr[i+1]
+      var xy = $temp[0..1]
+      var xy2 = $temp[3..4]
+      let x1 = convertToPixel(xy, "x")
+      let y1 = convertToPixel(xy, "y")
+      let x2 = convertToPixel(xy2, "x")
+      let y2 = convertToPixel(xy2, "y")
+      drawRectangle(x1, y1, x2, y2)
+      if arr[i+2] == "stop":  #no need to continue looping
+        break 
+    elif arr[i] == "tri":      
+      var temp = $arr[i+1]
+      var xy = $temp[0..1]
+      var xy2 = $temp[3..4]
+      var xy3 = $temp[6..7]
+      let x1 = convertToPixel(xy, "x")
+      let y1 = convertToPixel(xy, "y")
+      let x2 = convertToPixel(xy2, "x")
+      let y2 = convertToPixel(xy2, "y")
+      let x3 = convertToPixel(xy3, "x")
+      let y3 = convertToPixel(xy3, "y") 
+      drawTriangle(x1, y1, x2, y2, x3, y3)
+      if arr[i+2] == "stop":  #no need to continue looping
+        break
+    elif arr[i] == "cir":      
+      var temp = arr[i+1]
+      var xy = $temp[0..1]
+      var xy2 = $temp[3..4]
+      let x1 = convertToPixel(xy, "x")
+      let y1 = convertToPixel(xy, "y")
+      let x2 = convertToPixel(xy2, "x")
+      let y2 = convertToPixel(xy2, "y")
+      drawCircle(x1, y1, x2, y2)  
+      if arr[i+2] == "stop":  #no need to continue looping
+        break
+           
+  image.writeFile("graphic.png") 
 
-  image.writeFile("graphic2.png")
 
+##################testing all the procedures#####################
+#var
+  #arrTesting:   seq[string] 
 
-
-#This is the procedure that will be used
-#proc processGraphic(commands: seq[string]) =
-  #codes here"
-
-#testing a proc that will receive array
-let cmdArray = ["go", "rec", "c6.f3", "rec", "c9.f7", "stop"] 
-
-echo cmdArray[1] #output: rec
-let v = cmdArray[2]
-echo v[3..4] #output: f3
-
-#processGraphic("tri", "c9", "a6", "e6", "cir", "d2", "d5", "")
-#processGraphic("rec", "c6", "f3", "", "axes", "i9", "", "")
-#processGraphic("rec", "c6", "f3", "", "rec", "c9", "f7", "")
-#processGraphic("tri", "e9", "c5", "g5", "axes", "i9", "", "")
-#processGraphic("tri", "c9", "a6", "e6", "cir", "d2", "d5", "")
-
-
+#arrTesting = @["go", "rec", "c6.f3", "cir", "d2.d5", "tri", "c9.a6.e6","axes", "i9", "stop"]
+#processGraphic(arrTesting)

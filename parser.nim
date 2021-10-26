@@ -103,7 +103,7 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
       echo "Error at pos: ", currentPos+1, " Did you mean \'go\'?"
 
   else:
-    echo "Error at pos: ", currentPos+1," type '\go'\ to get started  "
+    echo "Error at pos: ", currentPos+1," type \'go\'to get started "
 
   #check for Command
   return savedString
@@ -284,13 +284,36 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
             recStringCmd = recStringCmd & charArr[currentPos]
             inc currentPos
 
-            if "123456789".contains(charArr[currentPos]):
+            if "123456789".contains(charArr[currentPos]) and if ",".contains(charArr[currentPos+1]):
+
+              #then we should have continue the command
+              recStringCmd = recStringCmd & charArr[currentPos]
+              savedString.add recStringCmd,$","
+              checkCmd(charArr,currentPos)
+              # call back the cmd checker
+
+            elif "123456789".contains(charArr[currentPos]) and "e".contains(charArr[currentPos+1]):
+              #we should be at the last Command
               recStringCmd = recStringCmd & charArr[currentPos]
               savedString.add recStringCmd
               checkCmd(charArr,currentPos)
               # call back the cmd checker
 
             else:
+
+              if not "123456789".contains(charArr[currentPos]) :
+
+                echo "Error at pos: ", currentPos," unknown char"
+
+              elif not "e".contains(charArr[currentPos+1]):
+                echo "Error at pos: ",currentPos+1, " expected command; found end"
+
+
+              #we failed the validation 
+
+
+
+
               echo "Error at pos: ",currentPos+1," Should be 1 - 9"
 
           else:

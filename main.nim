@@ -20,7 +20,7 @@ proc grammar() =
     echo "\t            | tri <xy>.<xy>.<xy>"
     echo "\t            | cir <xy>.<xy>"
     echo "\t            | axes <x>.<y>"
-    echo "\t            | fill <x>.<y>"
+    echo "\t            | fill <x><y>"
     echo "\t      <xy> → <x><y>"
     echo "\t       <x> → a|b|c|d|e|f|g|h|i"
     echo "\t       <y> → 1|2|3|4|5|6|7|8|9"
@@ -54,6 +54,24 @@ while status:
 
 
   case grammar
+
+  of "test":
+
+    var testArr : seq[string]= @[]
+    testArr.add $"go rec a1.a1 stop"
+    testArr.add $"go tri a1.a1.a1 stop"
+    testArr.add $"go cir a1.a1 stop"
+    testArr.add $"go axes a.1 stop"
+    testArr.add $"go fill a.1 stop"
+
+    testArr.add $"go rec a2.a2 tri a2.a2.a2 cir a2.a2 axes a.2 fill a.2 stop"
+    
+
+    for each in testArr:
+      getInput(each)
+
+
+
   of "EXIT":
     echo "Leave the program"
     status = false
