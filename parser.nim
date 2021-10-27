@@ -265,16 +265,13 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
   if currentPos < charArr.len()-1 :
 
-
     if "abcdefghi".contains(charArr[currentPos]):
       recStringCmd = recStringCmd & charArr[currentPos]
       inc currentPos
 
-
       if "123456789".contains(charArr[currentPos]):
         recStringCmd = recStringCmd & charArr[currentPos]
         inc currentPos
-
 
         if ".".contains(charArr[currentPos]):
           recStringCmd = recStringCmd & charArr[currentPos]
@@ -284,36 +281,33 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
             recStringCmd = recStringCmd & charArr[currentPos]
             inc currentPos
 
-            if "123456789".contains(charArr[currentPos]) and if ",".contains(charArr[currentPos+1]):
-
+            if "123456789".contains(charArr[currentPos]):
               #then we should have continue the command
               recStringCmd = recStringCmd & charArr[currentPos]
-              savedString.add recStringCmd,$","
-              checkCmd(charArr,currentPos)
-              # call back the cmd checker
 
-            elif "123456789".contains(charArr[currentPos]) and "e".contains(charArr[currentPos+1]):
-              #we should be at the last Command
-              recStringCmd = recStringCmd & charArr[currentPos]
-              savedString.add recStringCmd
-              checkCmd(charArr,currentPos)
-              # call back the cmd checker
+              if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+                recStringCmd = recStringCmd & charArr[currentPos+1]
+                savedString.add recStringCmd
+                inc currentPos
+                checkCmd(charArr,currentPos)
 
+              elif charArr[currentPos+1] == 's':
+                #It should be the last command so we just add the string and call the checkCmd
+
+                savedString.add recStringCmd
+                checkCmd(charArr,currentPos)
+
+              else:
+                if charArr[currentPos+1] != ',' :
+
+                  echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+                else:
+
+                  echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+
+           
             else:
-
-              if not "123456789".contains(charArr[currentPos]) :
-
-                echo "Error at pos: ", currentPos," unknown char"
-
-              elif not "e".contains(charArr[currentPos+1]):
-                echo "Error at pos: ",currentPos+1, " expected command; found end"
-
-
-              #we failed the validation 
-
-
-
-
               echo "Error at pos: ",currentPos+1," Should be 1 - 9"
 
           else:
