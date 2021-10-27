@@ -287,14 +287,14 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
               echo recStringCmd , ": STRING 1"
 
               recStringCmd = recStringCmd & charArr[currentPos]
-              inc currentPos
+              
 
               echo currentPos , ":POS"
               echo recStringCmd , ": STRING 2"
              
               var thisProgramHasFunctionalSideEffects : int = currentPos
 
-              if charArr[currentPos] == ',' and charArr[thisProgramHasFunctionalSideEffects+1] != 's':
+              if charArr[currentPos+1] == ',' and charArr[thisProgramHasFunctionalSideEffects+2] != 's':
 
                 echo currentPos , ":POS"
                 echo recStringCmd , ": STRING 3"
@@ -308,10 +308,11 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
               elif charArr[currentPos] == 's':
                 #It should be the last command so we just add the string and call the checkCmd
 
-                echo currentPos , ":POS"
-                echo recStringCmd , ": STRING 4"
 
                 savedString.add recStringCmd
+
+                echo currentPos , ":POS"
+                echo recStringCmd , ": STRING 4"
                 checkCmd(charArr,currentPos)
 
               else:
