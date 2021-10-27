@@ -519,10 +519,31 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
   
 
         if "123456789".contains(charArr[currentPos]):
+
+          #then we should have continue the command
           axesStringCmd = axesStringCmd & charArr[currentPos]
-          savedString.add axesStringCmd
-          checkCmd(charArr,currentPos)
-              # call back the cmd checker
+
+          if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+            axesStringCmd = axesStringCmd & charArr[currentPos+1]
+            savedString.add axesStringCmd
+            inc currentPos
+            checkCmd(charArr,currentPos)
+
+          elif charArr[currentPos+1] == 's':
+                #It should be the last command so we just add the string and call the checkCmd
+
+            savedString.add axesStringCmd
+            checkCmd(charArr,currentPos)
+
+          else:
+            if charArr[currentPos+1] != ',' :
+
+              echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+            else:
+
+              echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+
 
         else:
            echo "Error at pos: ", currentPos+1, " Unknown in the third position"

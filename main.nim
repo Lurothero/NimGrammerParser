@@ -20,7 +20,7 @@ proc grammar() =
     echo "\t            | tri <xy>.<xy>.<xy>"
     echo "\t            | cir <xy>.<xy>"
     echo "\t            | axes <x>.<y>"
-    echo "\t            | fill <x><y>"
+    echo "\t            | fill <x>.<y>"
     echo "\t      <xy> → <x><y>"
     echo "\t       <x> → a|b|c|d|e|f|g|h|i"
     echo "\t       <y> → 1|2|3|4|5|6|7|8|9"
