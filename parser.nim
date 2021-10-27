@@ -115,7 +115,6 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
 
 proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
-  echo charArr
   currentPos = currentPosIndex
 
   #check to see if the next starts a valid command

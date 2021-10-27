@@ -56,7 +56,6 @@ while status:
   case grammar
 
   of "test":
-
     var testArr : seq[string]= @[]
     testArr.add $"go rec a1.a1 stop"
     testArr.add $"go tri a1.a1.a1 stop"
@@ -64,8 +63,100 @@ while status:
     testArr.add $"go axes a.1 stop"
     testArr.add $"go fill a.1 stop"
 
-    testArr.add $"go rec a2.a2 tri a2.a2.a2 cir a2.a2 axes a.2 fill a.2 stop"
+    testArr.add $"go rec a1.a1, rec a2.a2 stop"
+    testArr.add $"go tri a1.a1.a1, tri a2.a2.a2 stop"
+    testArr.add $"go cir a1.a1, cir a2.a2 stop"
+    testArr.add $"go axes a.1, axes a.2 stop"
+    testArr.add $"go fill a.1, fill a.2 stop"
+
+
+    testArr.add $"go rec a1.a1, tri a1.a1.a1, cir a1.a1, axes a.1, fill a.1 stop"
+
+    testArr.add $""
+    testArr.add $"d"
+    testArr.add $"g"
+    testArr.add $"gx"
+    testArr.add $"go"
+    testArr.add $"go go"
+    testArr.add $"go stop"
+
+    testArr.add $"stop"
+    testArr.add $"stop stop"
+    testArr.add $"go stop stop"
+    testArr.add $"go rec a1.a1 stop stop"
+
+
+    testArr.add $"go xec a1.a1 stop"
+    testArr.add $"go ruc a1.a1 stop"
+    testArr.add $"go res a1.a1 stop"
+    testArr.add $"go rec z1.a1 stop"
+    testArr.add $"go rec a1.a1 stop"
+    testArr.add $"go rec a11.a1 stop"
+
+    testArr.add $"go rec a1.a1 rec a2.a2 stop"
+    testArr.add $"go rec a1.a1, rec a2.a2, stop"
+    testArr.add $"go rec a1.a1; rec a2.a2 stop"
+
+    testArr.add $"go rec a1.a1, rec a2.a2 stop"
+
+    testArr.add $"go rec "
+    testArr.add $"go rec a "
+    testArr.add $"go rec a1"
+    testArr.add $"go rec a1."
+    testArr.add $"go rec a1.1"
+    testArr.add $"go rec a1.a1"
+    testArr.add $"go rec a1.a1 s"
+    testArr.add $"go rec a1.a1 st"
+    testArr.add $"go rec a1.a1 sto"
+    testArr.add $"go rec a1.a1 stop"
+
     
+
+
+    testArr.add $"go tri "
+    testArr.add $"go tri a"
+    testArr.add $"go tri a1."
+    testArr.add $"go tri a1.a"
+    testArr.add $"go tri a1.a1. "
+    testArr.add $"go tri a1.a1.a "
+    testArr.add $"go tri a1.a1.a1 "
+    testArr.add $"go tri a1.a1.a1 s"
+    testArr.add $"go tri a1.a1.a1 st"
+    testArr.add $"go tri a1.a1.a1 sto"
+    testArr.add $"go tri a1.a1.a1 stop"
+
+
+
+    testArr.add $"go cir "
+    testArr.add $"go cir a "
+    testArr.add $"go cir a1"
+    testArr.add $"go cir a1."
+    testArr.add $"go cir a1.1"
+    testArr.add $"go cir a1.a1"
+    testArr.add $"go cir a1.a1 s"
+    testArr.add $"go cir a1.a1 st"
+    testArr.add $"go cir a1.a1 sto"
+    testArr.add $"go cir a1.a1 stop"
+
+
+
+    testArr.add $"go axes"
+    testArr.add $"go axes a"
+    testArr.add $"go axes a. "
+    testArr.add $"go axes a.1 "
+    testArr.add $"go axes a.1 s"
+    testArr.add $"go axes a.1 st"
+    testArr.add $"go axes a.1 sto"
+    testArr.add $"go axes a.1 stop"
+
+    testArr.add $"go fill"
+    testArr.add $"go fill a"
+    testArr.add $"go fill a. "
+    testArr.add $"go fill a.1 "
+    testArr.add $"go fill a.1 s"
+    testArr.add $"go fill a.1 st"
+    testArr.add $"go fill a.1 sto"
+    testArr.add $"go fill a.1 stop"
 
     for each in testArr:
       getInput(each)
