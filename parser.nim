@@ -111,7 +111,6 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
 
 proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
-  echo charArr
   currentPos = currentPosIndex
 
   #check to see if the next starts a valid command
@@ -233,11 +232,10 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
             savedString.add $"stop"
 
 
-            echo "If you are here then you made it into the end of the program"
+            echo "\nIf you are here then you made it into the end of the program\n"
 
-            echo "Pretend the parser, tree and graphic are generated here"
+            echo "Pretend the parser, tree and graphic are generated here \n \n"
             
-            echo "THIS IS THE ARRAY POS: ", currentPos
 
           elif charArr[currentPos] != 'p':
             echo "Error at pos: ", currentPos+1," Maybe a typo?? "
@@ -264,6 +262,8 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
 
   if currentPos < charArr.len()-1 :
+    echo "CURRENT POS: ", $currentPos
+    echo "Chararr lenght - 1 ", charArr.len()-1
 
     if "abcdefghi".contains(charArr[currentPos]):
       recStringCmd = recStringCmd & charArr[currentPos]
@@ -283,16 +283,33 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
             if "123456789".contains(charArr[currentPos]):
               #then we should have continue the command
-              recStringCmd = recStringCmd & charArr[currentPos]
+              echo currentPos , ":POS"
+              echo recStringCmd , ": STRING 1"
 
-              if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
-                recStringCmd = recStringCmd & charArr[currentPos+1]
+              recStringCmd = recStringCmd & charArr[currentPos]
+              inc currentPos
+
+              echo currentPos , ":POS"
+              echo recStringCmd , ": STRING 2"
+             
+              var thisProgramHasFunctionalSideEffects : int = currentPos
+
+              if charArr[currentPos] == ',' and charArr[thisProgramHasFunctionalSideEffects+1] != 's':
+
+                echo currentPos , ":POS"
+                echo recStringCmd , ": STRING 3"
+
+                recStringCmd = recStringCmd & charArr[currentPos]
                 savedString.add recStringCmd
-                inc currentPos
                 checkCmd(charArr,currentPos)
 
-              elif charArr[currentPos+1] == 's':
+            
+
+              elif charArr[currentPos] == 's':
                 #It should be the last command so we just add the string and call the checkCmd
+
+                echo currentPos , ":POS"
+                echo recStringCmd , ": STRING 4"
 
                 savedString.add recStringCmd
                 checkCmd(charArr,currentPos)
