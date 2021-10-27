@@ -1,6 +1,7 @@
 
 
-include parser
+include grammarChecker
+
 
 
 #   CMPS3111 Programming Project 2
@@ -61,7 +62,7 @@ while status:
     testArr.add $"go tri a1.a1.a1 stop"
     testArr.add $"go cir a1.a1 stop"
     testArr.add $"go axes a.1 stop"
-    testArr.add $"go fill a.1 stop"
+    testArr.add $"go fill a.2 stop"
 
     testArr.add $"go rec a1.a1, rec a2.a2 stop"
     testArr.add $"go tri a1.a1.a1, tri a2.a2.a2 stop"

@@ -1,5 +1,8 @@
 #Imports 
 import std/strutils
+import std/[algorithm]
+
+include derivation
 
 
 var currentPos : int = 0
@@ -234,13 +237,37 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
           if charArr[currentPos] == 'p' and currentPos == charArr.len()-1:
             savedString.add $"stop"
+            
+            derivation(savedString)
+            #CALL FUNCTIONS BELOW THIS CODE
+            
 
+            #[
+            
+              Hello there, if you need the string to do other process note that it is a STRING of SEQ 
+
+                ==>savedString<==
+
+              INPUT STRING :
+                go rec a1.a1 stop
+
+              savedString :
+                @["go", "rec", "a1.a1", "stop"]
+
+                
+            
+            ]#
 
             echo "If you are here then you made it into the end of the program"
 
             echo "Pretend the parser, tree and graphic are generated here"
-            
+
+            echo savedString        
             echo "THIS IS THE ARRAY POS: ", currentPos
+
+     
+
+            #CALL FUNCTIONS ABOVE THIS LINE
 
           elif charArr[currentPos] != 'p':
             echo "Error at pos: ", currentPos+1," Maybe a typo?? "
@@ -636,3 +663,5 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
 #fails the size check
   else:
     echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
+
+
