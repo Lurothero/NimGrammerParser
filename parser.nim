@@ -544,7 +544,6 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
 
               echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
 
-
         else:
            echo "Error at pos: ", currentPos+1, " Unknown in the third position"
       else:
@@ -580,10 +579,30 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
   
 
         if "123456789".contains(charArr[currentPos]):
+        
+          #then we should have continue the command
           fillStringCmd = fillStringCmd & charArr[currentPos]
-          savedString.add fillStringCmd
-          checkCmd(charArr,currentPos)
-              # call back the cmd checker
+
+          if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+            fillStringCmd = fillStringCmd & charArr[currentPos+1]
+            savedString.add fillStringCmd
+            inc currentPos
+            checkCmd(charArr,currentPos)
+
+          elif charArr[currentPos+1] == 's':
+                #It should be the last command so we just add the string and call the checkCmd
+
+            savedString.add fillStringCmd
+            checkCmd(charArr,currentPos)
+
+          else:
+            if charArr[currentPos+1] != ',' :
+
+              echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+            else:
+
+              echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
         else:
            echo "Error at pos: ", currentPos+1, " Unknown in the third position"
       else:
