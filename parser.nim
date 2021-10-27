@@ -95,9 +95,13 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
     inc currentPos
 
     if charArr[currentPos] == 'o' and currentPos < charArr.len()-1 :
-     
-      savedString.add $"go"
-      checkCmd(charArr,currentPos)
+
+      if charArr[currentPos+1] == 's':
+        echo "Error at pos :",currentPos+1," Are you attempting to stop after go?" 
+      else:
+ 
+        savedString.add $"go"
+        checkCmd(charArr,currentPos)
 
     else:
       echo "Error at pos: ", currentPos+1, " Did you mean \'go\'?"
@@ -265,23 +269,23 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
   if currentPos < charArr.len()-1 :
 
-    if "abcdefghi".contains(charArr[currentPos]):
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
       recStringCmd = recStringCmd & charArr[currentPos]
       inc currentPos
 
-      if "123456789".contains(charArr[currentPos]):
+      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
         recStringCmd = recStringCmd & charArr[currentPos]
         inc currentPos
 
-        if ".".contains(charArr[currentPos]):
+        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
           recStringCmd = recStringCmd & charArr[currentPos]
           inc currentPos
 
-          if "abcdefghi".contains(charArr[currentPos]):
+          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
             recStringCmd = recStringCmd & charArr[currentPos]
             inc currentPos
 
-            if "123456789".contains(charArr[currentPos]):
+            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
               #then we should have continue the command
               recStringCmd = recStringCmd & charArr[currentPos]
 
@@ -344,65 +348,69 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
   if currentPos < charArr.len()-1 :
 
 
-    if "abcdefghi".contains(charArr[currentPos]):
+    if "abcdefghi".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
       triStringCmd = triStringCmd & charArr[currentPos]
       inc currentPos
 
 
-      if "123456789".contains(charArr[currentPos]):
+      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
         triStringCmd = triStringCmd & charArr[currentPos]
         inc currentPos
 
 
-        if ".".contains(charArr[currentPos]):
+        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
           triStringCmd = triStringCmd & charArr[currentPos]
           inc currentPos
 
-          if "abcdefghi".contains(charArr[currentPos]):
+          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
             triStringCmd = triStringCmd & charArr[currentPos]
             inc currentPos
 
 
-            if "123456789".contains(charArr[currentPos]):
+            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
               triStringCmd = triStringCmd & charArr[currentPos]
               inc currentPos
 
 
-              if ".".contains(charArr[currentPos]):
+              if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
                 triStringCmd = triStringCmd & charArr[currentPos]
                 inc currentPos
 
-                if "abcdefghi".contains(charArr[currentPos]):
+                if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
                   triStringCmd = triStringCmd & charArr[currentPos]
                   inc currentPos
                 
 
-                  if "123456789".contains(charArr[currentPos]):
+                  if "123456789".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
                 
                     #then we should have continue the command
                     triStringCmd = triStringCmd & charArr[currentPos]
 
-                    if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
-                      triStringCmd = triStringCmd & charArr[currentPos+1]
-                      savedString.add triStringCmd
-                      inc currentPos
-                      checkCmd(charArr,currentPos)
+                    if currentPos < charArr.len()-4:
 
-                    elif charArr[currentPos+1] == 's':
-                      #It should be the last command so we just add the string and call the checkCmd
+                      if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+                        triStringCmd = triStringCmd & charArr[currentPos+1]
+                        savedString.add triStringCmd
+                        inc currentPos
+                        checkCmd(charArr,currentPos)
 
-                      savedString.add triStringCmd
-                      checkCmd(charArr,currentPos)
+                      elif charArr[currentPos+1] == 's':
+                        #It should be the last command so we just add the string and call the checkCmd
 
-                    else:
-                      if charArr[currentPos+1] != ',' :
-
-                        echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+                        savedString.add triStringCmd
+                        checkCmd(charArr,currentPos)
 
                       else:
+                        if charArr[currentPos+1] != ',' :
 
-                        echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+                          echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
+                        else:
+
+                          echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+
+                    else :
+                      echo "failure at tri"
                   else:
                     echo "Error at pos: ", currentPos+1, " Unknown in the eighth position"
                 else:
@@ -437,48 +445,52 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
 
   if currentPos < charArr.len()-1 :
 
-    if "abcdefghi".contains(charArr[currentPos]):
+    if "abcdefghi".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
       cirStringCmd = cirStringCmd & charArr[currentPos]
       inc currentPos
 
-      if "123456789".contains(charArr[currentPos]):
+      if "123456789".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
         cirStringCmd = cirStringCmd & charArr[currentPos]
         inc currentPos
 
-        if ".".contains(charArr[currentPos]):
+        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
           cirStringCmd = cirStringCmd & charArr[currentPos]
           inc currentPos
 
-          if "abcdefghi".contains(charArr[currentPos]):
+          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
             cirStringCmd = cirStringCmd & charArr[currentPos]
             inc currentPos
 
-            if "123456789".contains(charArr[currentPos]):
+            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
               #then we should have continue the command
               cirStringCmd = cirStringCmd & charArr[currentPos]
 
-              if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
-                cirStringCmd = cirStringCmd & charArr[currentPos+1]
-                savedString.add cirStringCmd
-                inc currentPos
-                checkCmd(charArr,currentPos)
+              if currentPos < charArr.len()-4:
 
-              elif charArr[currentPos+1] == 's':
-                #It should be the last command so we just add the string and call the checkCmd
+                if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+                  cirStringCmd = cirStringCmd & charArr[currentPos+1]
+                  savedString.add cirStringCmd
+                  inc currentPos
+                  checkCmd(charArr,currentPos)
 
-                savedString.add cirStringCmd
-                checkCmd(charArr,currentPos)
+                elif charArr[currentPos+1] == 's':
+                  #It should be the last command so we just add the string and call the checkCmd
 
-              else:
-                if charArr[currentPos+1] != ',' :
-
-                  echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+                  savedString.add cirStringCmd
+                  checkCmd(charArr,currentPos)
 
                 else:
+                  if charArr[currentPos+1] != ',' :
 
-                  echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+                    echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
-           
+                  else:
+
+                    echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+
+              else:
+                echo "failure at cir"
+
             else:
               echo "Error at pos: ",currentPos+1," Should be 1 - 9"
 
@@ -513,41 +525,45 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
   if currentPos < charArr.len()-1 :
 
 
-    if "abcdefghi".contains(charArr[currentPos]):
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
       axesStringCmd = axesStringCmd & charArr[currentPos]
       inc currentPos
 
 
-      if ".".contains(charArr[currentPos]):
+      if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
         axesStringCmd = axesStringCmd & charArr[currentPos]
         inc currentPos
   
 
-        if "123456789".contains(charArr[currentPos]):
+        if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
 
           #then we should have continue the command
           axesStringCmd = axesStringCmd & charArr[currentPos]
 
-          if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
-            axesStringCmd = axesStringCmd & charArr[currentPos+1]
-            savedString.add axesStringCmd
-            inc currentPos
-            checkCmd(charArr,currentPos)
+          if currentPos < charArr.len()-4:
 
-          elif charArr[currentPos+1] == 's':
-                #It should be the last command so we just add the string and call the checkCmd
+            if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+              axesStringCmd = axesStringCmd & charArr[currentPos+1]
+              savedString.add axesStringCmd
+              inc currentPos
+              checkCmd(charArr,currentPos)
 
-            savedString.add axesStringCmd
-            checkCmd(charArr,currentPos)
+            elif charArr[currentPos+1] == 's':
+                  #It should be the last command so we just add the string and call the checkCmd
 
-          else:
-            if charArr[currentPos+1] != ',' :
-
-              echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+              savedString.add axesStringCmd
+              checkCmd(charArr,currentPos)
 
             else:
+              if charArr[currentPos+1] != ',' :
 
-              echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+                echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+              else:
+
+                echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+          else:
+            echo "failure at axes"
 
         else:
            echo "Error at pos: ", currentPos+1, " Unknown in the third position"
@@ -573,41 +589,44 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
   if currentPos < charArr.len()-1 :
 
 
-    if "abcdefghi".contains(charArr[currentPos]):
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
       fillStringCmd = fillStringCmd & charArr[currentPos]
       inc currentPos
 
 
-      if ".".contains(charArr[currentPos]):
+      if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
         fillStringCmd = fillStringCmd & charArr[currentPos]
         inc currentPos
   
 
-        if "123456789".contains(charArr[currentPos]):
+        if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
         
           #then we should have continue the command
           fillStringCmd = fillStringCmd & charArr[currentPos]
 
-          if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
-            fillStringCmd = fillStringCmd & charArr[currentPos+1]
-            savedString.add fillStringCmd
-            inc currentPos
-            checkCmd(charArr,currentPos)
+          if currentPos < charArr.len()-4:
 
-          elif charArr[currentPos+1] == 's':
-                #It should be the last command so we just add the string and call the checkCmd
+            if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+              fillStringCmd = fillStringCmd & charArr[currentPos+1]
+              savedString.add fillStringCmd
+              inc currentPos
+              checkCmd(charArr,currentPos)
 
-            savedString.add fillStringCmd
-            checkCmd(charArr,currentPos)
+            elif charArr[currentPos+1] == 's':
+                  #It should be the last command so we just add the string and call the checkCmd
 
-          else:
-            if charArr[currentPos+1] != ',' :
-
-              echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+              savedString.add fillStringCmd
+              checkCmd(charArr,currentPos)
 
             else:
+              if charArr[currentPos+1] != ',' :
 
-              echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+                echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+              else:
+                echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+          else:
+            echo "failure at fill"
         else:
            echo "Error at pos: ", currentPos+1, " Unknown in the third position"
       else:
