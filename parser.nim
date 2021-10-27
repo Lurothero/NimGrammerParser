@@ -117,7 +117,7 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
   #check to see if the next starts a valid command
   inc currentPos
 
-  if currentPos < charArr.len()-1 :
+  if currentPos < charArr.len()-5 :
 
     case charArr[currentPos]
 
@@ -263,7 +263,7 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
   var recStringCmd : string =""
 
 
-  if currentPos < charArr.len()-1 :
+  if currentPos < charArr.len()-5 :
 
     if "abcdefghi".contains(charArr[currentPos]):
       recStringCmd = recStringCmd & charArr[currentPos]
@@ -284,6 +284,11 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
             if "123456789".contains(charArr[currentPos]):
               #then we should have continue the command
               recStringCmd = recStringCmd & charArr[currentPos]
+
+              
+
+
+
 
               if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
                 recStringCmd = recStringCmd & charArr[currentPos+1]
@@ -336,7 +341,7 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
   var triStringCmd : string =""
 
 
-  if currentPos < charArr.len()-1 :
+  if currentPos < charArr.len()-5 :
 
 
     if "abcdefghi".contains(charArr[currentPos]):
@@ -430,7 +435,7 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
   var cirStringCmd : string =""
 
 
-  if currentPos < charArr.len()-1 :
+  if currentPos < charArr.len()-5 :
 
     if "abcdefghi".contains(charArr[currentPos]):
       cirStringCmd = cirStringCmd & charArr[currentPos]
@@ -505,7 +510,7 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
   var axesStringCmd : string =""
 
 
-  if currentPos < charArr.len()-1 :
+  if currentPos < charArr.len()-5 :
 
 
     if "abcdefghi".contains(charArr[currentPos]):
@@ -565,7 +570,7 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
   var fillStringCmd : string =""
 
 
-  if currentPos < charArr.len()-1 :
+  if currentPos < charArr.len()-5 :
 
 
     if "abcdefghi".contains(charArr[currentPos]):
