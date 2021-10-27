@@ -373,10 +373,31 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
                 
 
                   if "123456789".contains(charArr[currentPos]):
+                
+                    #then we should have continue the command
                     triStringCmd = triStringCmd & charArr[currentPos]
-                    savedString.add triStringCmd
-                    checkCmd(charArr,currentPos)
 
+                    if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+                      triStringCmd = triStringCmd & charArr[currentPos+1]
+                      savedString.add triStringCmd
+                      inc currentPos
+                      checkCmd(charArr,currentPos)
+
+                    elif charArr[currentPos+1] == 's':
+                      #It should be the last command so we just add the string and call the checkCmd
+
+                      savedString.add triStringCmd
+                      checkCmd(charArr,currentPos)
+
+                    else:
+                      if charArr[currentPos+1] != ',' :
+
+                        echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+                      else:
+
+                        echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+                        
                   else:
                     echo "Error at pos: ", currentPos+1, " Unknown in the eighth position"
                 else:
