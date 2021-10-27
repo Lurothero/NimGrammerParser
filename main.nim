@@ -64,45 +64,7 @@ while status:
     testArr.add $"go axes a.1 stop"
     testArr.add $"go fill a.1 stop"
 
-    testArr.add $"go rec a1.a1, rec a2.a2 stop"
-    testArr.add $"go tri a1.a1.a1, tri a2.a2.a2 stop"
-    testArr.add $"go cir a1.a1, cir a2.a2 stop"
-    testArr.add $"go axes a.1, axes a.2 stop"
-    testArr.add $"go fill a.1, fill a.2 stop"
-
-
-    testArr.add $"go rec a1.a1, tri a1.a1.a1, cir a1.a1, axes a.1, fill a.1 stop"
-
-    testArr.add $""
-    testArr.add $"d"
-    testArr.add $"g"
-    testArr.add $"gx"
-    testArr.add $"go"
-    testArr.add $"go go"
-    testArr.add $"go stop"
-
-    testArr.add $"stop"
-    testArr.add $"stop stop"
-    testArr.add $"go stop stop"
-    testArr.add $"go rec a1.a1 stop stop"
-
-
-    testArr.add $"go xec a1.a1 stop"
-    testArr.add $"go ruc a1.a1 stop"
-    testArr.add $"go res a1.a1 stop"
-    testArr.add $"go rec z1.a1 stop"
-    testArr.add $"go rec a1.a1 stop"
-    testArr.add $"go rec a11.a1 stop"
-
-    testArr.add $"go rec a1.a1 rec a2.a2 stop"
-    testArr.add $"go rec a1.a1, rec a2.a2, stop"
-    testArr.add $"go rec a1.a1; rec a2.a2 stop"
-
-    testArr.add $"go rec a1.a1, rec a2.a2 stop"
-
-
-    testArr.add $"go rec a1.a1"
-    testArr.add $"go rec a1.a1,"    
+    testArr.add $"go rec a2.a2 tri a2.a2.a2 cir a2.a2 axes a.2 fill a.2 stop"
     
 
     for each in testArr:
