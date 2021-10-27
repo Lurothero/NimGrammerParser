@@ -214,7 +214,7 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
           inc currentPos
 
           if charArr[currentPos] == 'l':            
-            savedString.add $"axes"
+            savedString.add $"fill"
             inc currentPos
                     #call to process rec command
             processFillCommand(charArr,currentPos) #//CHANGE THIS 
