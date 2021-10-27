@@ -397,7 +397,7 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
                       else:
 
                         echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
-                        
+
                   else:
                     echo "Error at pos: ", currentPos+1, " Unknown in the eighth position"
                 else:
@@ -423,6 +423,7 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
 #Process for rec command validation
 proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
 
+
   currentPos = currentPosIndex
 
 #We need to build the string that will construct the command
@@ -431,16 +432,13 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
 
   if currentPos < charArr.len()-1 :
 
-
     if "abcdefghi".contains(charArr[currentPos]):
       cirStringCmd = cirStringCmd & charArr[currentPos]
       inc currentPos
 
-
       if "123456789".contains(charArr[currentPos]):
         cirStringCmd = cirStringCmd & charArr[currentPos]
         inc currentPos
-
 
         if ".".contains(charArr[currentPos]):
           cirStringCmd = cirStringCmd & charArr[currentPos]
@@ -451,31 +449,50 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
             inc currentPos
 
             if "123456789".contains(charArr[currentPos]):
+              #then we should have continue the command
               cirStringCmd = cirStringCmd & charArr[currentPos]
-              savedString.add cirStringCmd
-              checkCmd(charArr,currentPos)
-              # call back the cmd checker
 
+              if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+                cirStringCmd = cirStringCmd & charArr[currentPos+1]
+                savedString.add cirStringCmd
+                inc currentPos
+                checkCmd(charArr,currentPos)
+
+              elif charArr[currentPos+1] == 's':
+                #It should be the last command so we just add the string and call the checkCmd
+
+                savedString.add cirStringCmd
+                checkCmd(charArr,currentPos)
+
+              else:
+                if charArr[currentPos+1] != ',' :
+
+                  echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+                else:
+
+                  echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+
+           
             else:
-               echo "Error at pos: ", currentPos+1, " Unknown in the fifth position"
+              echo "Error at pos: ",currentPos+1," Should be 1 - 9"
+
           else:
-             echo "Error at pos: ", currentPos+1, " Unknown in the fourth position"
+            echo "Error at pos: ",currentPos+1," Should be a to i"
+
         else:
-           echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+          echo "Error at pos: ",currentPos+1," Should be ."
+
       else:
-         echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+        echo "Error at pos: ",currentPos+1," Should be 1 - 9"
+
+    #Close first
     else:
-       echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+      echo "Error at pos: ",currentPos+1," Should be a to i"
 
 #fails the size check
   else:
     echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
-
-
-
-
-
-
 
 
 
