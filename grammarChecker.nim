@@ -595,11 +595,11 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
 
   if currentPos < charArr.len()-1 :
 
-    if "abcdefghi".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
       cirStringCmd = cirStringCmd & charArr[currentPos]
       inc currentPos
 
-      if "123456789".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
+      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
         cirStringCmd = cirStringCmd & charArr[currentPos]
         inc currentPos
 
@@ -632,35 +632,67 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
                 else:
                   if charArr[currentPos+1] != ',' :
 
-                    echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+                    errorDump(charArr)
+                    echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
                   else:
-
+                    errorDump(charArr)
                     echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
 
               else:
-                echo "failure at cir"
 
+                errorDump(charArr)
+                echo "Error at pos: ", currentPos, " Sudden end of program ??"
+
+           
             else:
-              echo "Error at pos: ",currentPos+1," Should be 1 - 9"
+
+              errorDump(charArr)
+
+              if not "123456789".contains(charArr[currentPos]):
+                echo "Error at pos: ",currentPos+1," Incorrect character!"
+              else:
+                echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
           else:
-            echo "Error at pos: ",currentPos+1," Should be a to i"
+
+            errorDump(charArr)
+
+            if not "abcdefghi".contains(charArr[currentPos]):
+              echo "Error at pos: ",currentPos+1," Incorrect character!"
+            else:
+              echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
         else:
-          echo "Error at pos: ",currentPos+1," Should be ."
+          errorDump(charArr)
 
+          if not ".".contains(charArr[currentPos]):
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+              
       else:
-        echo "Error at pos: ",currentPos+1," Should be 1 - 9"
 
-    #Close first
+        errorDump(charArr)
+
+        if not "123456789".contains(charArr[currentPos]):
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
     else:
-      echo "Error at pos: ",currentPos+1," Should be a to i"
+      errorDump(charArr)
+
+      if not "abcdefghi".contains(charArr[currentPos]):
+        echo "Error at pos: ",currentPos+1," Incorrect character!"
+      else:
+        echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 #fails the size check
   else:
-    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
-
+    errorDump(charArr)
+    echo "Unexpected end of program at pos : ",currentPos+1
 
 
 
