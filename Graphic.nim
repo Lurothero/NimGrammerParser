@@ -165,47 +165,47 @@ proc drawAxes(xy: string)=
     image.fillText(font.typeset("a", vec2(180, 180)), translate(vec2(268, 260)))
     
   #Checks for y axis label and labels it properly
-  if xy[1] == '9':    
+  if xy[2] == '9':    
     for i in 1..9:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus
-  elif xy[1] == '8':    
+  elif xy[2] == '8':    
     for i in 1..8:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus    
-  elif xy[1] == '7':    
+  elif xy[2] == '7':    
     for i in 1..7:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus    
-  elif xy[1] == '6':    
+  elif xy[2] == '6':    
     for i in 1..6:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus          
-  elif xy[1] == '5':    
+  elif xy[2] == '5':    
     for i in 1..5:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus
-  elif xy[1] == '4':    
+  elif xy[2] == '4':    
     for i in 1..4:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus
-  elif xy[1] == '3':    
+  elif xy[2] == '3':    
     for i in 1..3:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus
-  elif xy[1] == '2':    
+  elif xy[2] == '2':    
     for i in 1..2:
       let y = intToStr(i)          
       image.fillText(font.typeset(y, vec2(180, 180)), translate(vec2(236, num)))      
       num = num - minus
-  elif xy[1] == '1':    
+  elif xy[2] == '1':    
     image.fillText(font.typeset("1", vec2(180, 180)), translate(vec2(236, 102)))
 
   #writes x and y on the x and y axis
@@ -306,7 +306,7 @@ proc processGraphic(arr: seq[string])=
   for i in 0..arr.len-1:
     if arr[i] == "axes":      
       var temp = arr[i+1]
-      var xy = $temp[0..1]  
+      var xy = $temp    #this should contain x.y  
       drawAxes(xy)
       if arr[i+2] == "stop":
         break  

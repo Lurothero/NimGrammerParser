@@ -1,8 +1,4 @@
-
-
 include grammarChecker
-
-
 
 #   CMPS3111 Programming Project 2
 #   Due Date 28/10/2021

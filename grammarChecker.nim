@@ -1,17 +1,15 @@
-#Imports 
+#Import Libs
 import std/strutils
 import std/[algorithm]
 
+#Other files 
 include derivation
 
-
+#Globar Variables - Reset on call
 var currentPos : int = 0
 var savedString : seq[string] = @[]
 
-
-#main parser starts here
-
-#foward declaration
+#Foward Declaration
 proc removeWhiteSpaces(input: string) : string
 proc joiner (toJoin : seq[string]) : string
 proc toCharArray (getString : string) : bool
@@ -23,12 +21,15 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int)
 proc processAxesCommand(charArr : seq[char],currentPosIndex : int) 
 proc processFillCommand(charArr : seq[char],currentPosIndex : int)
 
+proc errorDump(charArray : seq[char],ErrorPos : int) 
+
 #Pass in the string from the user
 proc getInput(input : string ) : void =
   
   currentPos = 0 
   savedString = @[]
 
+  #discard - Ignores the return value
   discard removeWhiteSpaces(input)
 #end of getInput
 
@@ -51,9 +52,11 @@ proc removeWhiteSpaces(input: string) : string =
   for tokens in processString.splitWhitespace():
     toArray.add(tokens)
 
-  #FOR DEBUGGING PURPOSES
-
+ 
+  #Joiner takes the input and queue them in one string
   discard joiner(toArray)
+
+  #Separate each character into a sequence
   discard toCharArray(joiner(toArray))
 
   return "done"
@@ -62,14 +65,17 @@ proc removeWhiteSpaces(input: string) : string =
 #Joins the string in a single char sequence
 proc joiner (toJoin : seq[string]):string =
 
+  #Empty string
   var holdThisStringForMePlz : string
 
+  #Start to construct string of words
   for each in toJoin:
     holdThisStringForMePlz.add $each
 
   return holdThisStringForMePlz
-#end of tokenizer
+#end of joiner
 
+#Contruct the character sequence
 proc toCharArray (getString : string) : bool = 
 
   #if true then throw an error
@@ -82,6 +88,7 @@ proc toCharArray (getString : string) : bool =
 
     var charArray : seq[char] = @[]
 
+    #individually add the characters from the string into a sequence
     for each in cast[seq[char]](getString):
       charArray.add $each
 
@@ -90,19 +97,24 @@ proc toCharArray (getString : string) : bool =
 #end of toCharArray
 
 
-
+#Start processing the command
 proc buildingBack (charArr : seq[char]) : seq[string] =
 
+
+  #Checks to see if the charArr has the word "go"
+  #charArr.len()-1 is used to prevent crashes if there is no stop 
   if charArr[currentPos] == 'g' and currentPos < charArr.len()-1 :
 
     inc currentPos
 
     if charArr[currentPos] == 'o' and currentPos < charArr.len()-1 :
 
+      #Checks to see if we immediately close the command and throw an error
       if charArr[currentPos+1] == 's':
         echo "Error at pos :",currentPos+1," Are you attempting to stop after go?" 
       else:
- 
+
+      #It doesnt stop after go so proceed
         savedString.add $"go"
         checkCmd(charArr,currentPos)
 
@@ -112,35 +124,43 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
   else:
     echo "Error at pos: ", currentPos+1," type \'go\'to get started "
 
-  #check for Command
+  
   return savedString
+#end of buildingBack
 
-
+#Handles the draw command
 proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
+  #Get the current index that was passed in
   currentPos = currentPosIndex
 
-  #check to see if the next starts a valid command
+  #Increment the counter 
   inc currentPos
 
+  #Checks for missing stop
   if currentPos < charArr.len()-1 :
 
+    #Switch statement that checks the first letter and perform the appropriate checks
     case charArr[currentPos]
+    of 'r': 
 
-
-    of 'r':  
       inc currentPos
 
       if charArr[currentPos] == 'e':
         inc currentPos
 
         if charArr[currentPos] == 'c':
+
+          #add rec to the string array
           savedString.add $"rec"
           inc currentPos
           #call to process rec command
           processRecCommand(charArr,currentPos)
 
         else:
+           
+          errorDump(charArr,currentPos)
+
           echo "Unknown char at pos: ",currentPos+1," Did you mean \'rec\' you were 1 letter off"
       else:
         echo "Unknown char at pos: ",currentPos+1," Did you mean \'rec\'"
@@ -663,5 +683,15 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
 #fails the size check
   else:
     echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
+
+
+proc errorDump(charArray : seq[char],ErrorPos : int)  =
+
+  var arr : seq[char] = charArray
+  var count : int = 1
+
+  for i in arr:
+    echo i, " at POS ", count,"\n"
+    inc count
 
 
