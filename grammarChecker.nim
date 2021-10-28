@@ -331,6 +331,12 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
             savedString.add $"stop"
             
             derivation(savedString)
+            echo "Press Enter to continue... \n"
+            var buffer : string = readLine(stdin)
+
+
+
+            
             #CALL FUNCTIONS BELOW THIS CODE
             
 
@@ -352,10 +358,11 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
             echo "If you are here then you made it into the end of the program"
 
-            echo "Pretend the parser, tree and graphic are generated here"
 
-            echo savedString        
-            echo "THIS IS THE ARRAY POS: ", currentPos
+
+
+
+            
 
      
 
@@ -870,7 +877,7 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
   
 
         if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
-        
+
           #then we should have continue the command
           fillStringCmd = fillStringCmd & charArr[currentPos]
 
@@ -891,22 +898,44 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
             else:
               if charArr[currentPos+1] != ',' :
 
-                echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+                errorDump(charArr)
+                echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
               else:
+                errorDump(charArr)
                 echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+
           else:
-            echo "failure at fill"
+            errorDump(charArr)
+            echo "Error at pos: ", currentPos, " Sudden end of program ??"
+
         else:
-           echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+          errorDump(charArr)
+
+          if not "123456789".contains(charArr[currentPos]):
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+          
       else:
-         echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+        errorDump(charArr)
+        if not ".".contains(charArr[currentPos]):
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
     else:
-       echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+      errorDump(charArr)
+      if not "abcdefghi".contains(charArr[currentPos]):
+        echo "Error at pos: ",currentPos+1," Incorrect character!"
+      else:
+        echo "Error at pos: ",currentPos+1," Nothing to follow through..."
        
 #fails the size check
   else:
-    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
+    errorDump(charArr)
+    echo "Unexpected end of program at pos : ",currentPos+1
 
 
 proc errorDump(charArray : seq[char])  =

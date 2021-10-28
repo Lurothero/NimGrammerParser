@@ -47,6 +47,7 @@ var status = true #rename?
 while status:
 
   #Grab the user input
+  echo "\nEnter your Command... \n"
   var grammar : string = readLine(stdin)
 
 
@@ -161,7 +162,7 @@ while status:
 
 
   of "EXIT":
-    echo "Leave the program"
+    echo "Leave the program \n"
     status = false
 
   of "HELP":
@@ -171,12 +172,11 @@ while status:
     grammar()
     
   else:
-    echo "ASSUME THE COMMAND"
     getInput(grammar)
 
 
 #end of while
 
 
-echo "BYE BYE"
+echo "Program Terminated...\n\n\n\n"
 
