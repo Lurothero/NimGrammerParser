@@ -21,7 +21,7 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int)
 proc processAxesCommand(charArr : seq[char],currentPosIndex : int) 
 proc processFillCommand(charArr : seq[char],currentPosIndex : int)
 
-proc errorDump(charArray : seq[char],ErrorPos : int) 
+proc errorDump(charArray : seq[char]) 
 
 #Pass in the string from the user
 proc getInput(input : string ) : void =
@@ -146,10 +146,10 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
       inc currentPos
 
-      if charArr[currentPos] == 'e':
+      if charArr[currentPos] == 'e' and currentPos < charArr.len()-1:
         inc currentPos
 
-        if charArr[currentPos] == 'c':
+        if charArr[currentPos] == 'c' and currentPos < charArr.len()-1:
 
           #add rec to the string array
           savedString.add $"rec"
@@ -159,91 +159,163 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
         else:
            
-          errorDump(charArr,currentPos)
+          errorDump(charArr)
 
-          echo "Unknown char at pos: ",currentPos+1," Did you mean \'rec\' you were 1 letter off"
+          if charArr[currentPos] != 'c':
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+          
       else:
-        echo "Unknown char at pos: ",currentPos+1," Did you mean \'rec\'"
+
+        errorDump(charArr)
+
+        if charArr[currentPos] != 'e':
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
     of 't':
       inc currentPos
 
-      if charArr[currentPos] == 'r':
+      if charArr[currentPos] == 'r' and currentPos < charArr.len()-1:
         inc currentPos
 
-        if charArr[currentPos] == 'i':
+        if charArr[currentPos] == 'i' and currentPos < charArr.len()-1:
 
           savedString.add $"tri"
           inc currentPos
           #call to process tri command
           processTriCommand(charArr,currentPos) 
-        else:            
-          echo "Unknown char at pos: ",currentPos+1," Did you mean \'tri\' you were 1 letter off"
-      else:
-        echo "Unknown char at pos: ",currentPos+1," Did you mean \'tri\'"
+        else:
+          errorDump(charArr)
 
+          if charArr[currentPos] != 'i':
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+               
+      else:
+
+        errorDump(charArr)
+        if charArr[currentPos] != 'r':
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+       
 
     of 'c':
 
       inc currentPos
 
-      if charArr[currentPos] == 'i':
+      if charArr[currentPos] == 'i' and currentPos < charArr.len()-1:
         inc currentPos
 
-        if charArr[currentPos] == 'r':
+        if charArr[currentPos] == 'r' and currentPos < charArr.len()-1:
           savedString.add $"cir"
           inc currentPos
                     #call to process rec command
           processCirCommand(charArr,currentPos) #//CHANGE THIS 
 
         else:            
-          echo "Unknown char at pos: ",currentPos+1," Did you mean \'cir\' you were 1 letter off"
+          errorDump(charArr)
+
+          if charArr[currentPos] != 'r':
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
       else:
-        echo "Unknown char at pos: ",currentPos+1," Did you mean \'cir\'"
+        errorDump(charArr)
+        if charArr[currentPos] != 'i':
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
 
     of 'a':
       inc currentPos
 
-      if charArr[currentPos] == 'x':
+      if charArr[currentPos] == 'x' and currentPos < charArr.len()-1:
         inc currentPos
 
-        if charArr[currentPos] == 'e':
+        if charArr[currentPos] == 'e' and currentPos < charArr.len()-1:
           inc currentPos
 
-          if charArr[currentPos] == 's':  
+          if charArr[currentPos] == 's' and currentPos < charArr.len()-1:  
             savedString.add $"axes"
             inc currentPos
                   #call to process rec command
             processAxesCommand(charArr,currentPos) #//CHANGE THIS 
 
           else:            
-            echo "Unknown char at pos: ",currentPos+1," Did you mean \'axes\' you were 1 letter off"
+            errorDump(charArr)
+
+            if charArr[currentPos] != 's':
+              echo "Error at pos: ",currentPos+1," Incorrect character!"
+            else:
+              echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
         else:
-          echo "Unknown char at pos: ",currentPos+1," Did you mean \'axes\'"
+
+          errorDump(charArr)
+
+          if charArr[currentPos] != 'e':
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+          
       else:
-        echo "Unknown char at pos: ",currentPos+1
+
+        errorDump(charArr)
+
+        if charArr[currentPos] != 'x':
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
     of 'f':
       inc currentPos
 
-      if charArr[currentPos] == 'i':
+      if charArr[currentPos] == 'i' and currentPos < charArr.len()-1:
         inc currentPos
 
-        if charArr[currentPos] == 'l':
+        if charArr[currentPos] == 'l' and currentPos < charArr.len()-1:
           inc currentPos
 
-          if charArr[currentPos] == 'l':            
+          if charArr[currentPos] == 'l' and currentPos < charArr.len()-1:            
             savedString.add $"fill"
             inc currentPos
                     #call to process rec command
             processFillCommand(charArr,currentPos) #//CHANGE THIS 
           else:
-            echo "Error at pos: ",currentPos+1," missed last letter on fill?"
+            errorDump(charArr)
+
+            if charArr[currentPos] != 'l':
+              echo "Error at pos: ",currentPos+1," Incorrect character!"
+            else:
+              echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
         else:
-          echo "Error at pos: ",currentPos+1," missed third letter on fill?"
+          
+          errorDump(charArr)
+
+          if charArr[currentPos] != 'l':
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
       else:
-        echo "Error at pos: ",currentPos+1," missed second letter on fill?"
+
+        errorDump(charArr)
+
+        if charArr[currentPos] != 'i':
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
       
     of 's':
       inc currentPos
@@ -302,7 +374,7 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
       echo "Error at pos: ",currentPos+1," unknown command"
 
   else:
-    echo "Error at pos: ", currentPos+1 ,"Reached the end of the command but should be more to process..."
+    echo "Error at pos: ", currentPos+1 ," Reached the end of the command but should be more to process..."
 
 #Process for rec command validation
 proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
@@ -352,35 +424,67 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
                 else:
                   if charArr[currentPos+1] != ',' :
 
-                    echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
+                    errorDump(charArr)
+                    echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
                   else:
-
+                    errorDump(charArr)
                     echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
 
               else:
-                echo "HEY SOMETHING IS WRONG HERE!"
+
+                errorDump(charArr)
+                echo "Error at pos: ", currentPos, " Sudden end of program ??"
 
            
             else:
-              echo "Error at pos: ",currentPos+1," Should be 1 - 9"
+
+              errorDump(charArr)
+
+              if not "123456789".contains(charArr[currentPos]):
+                echo "Error at pos: ",currentPos+1," Incorrect character!"
+              else:
+                echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
           else:
-            echo "Error at pos: ",currentPos+1," Should be a to i"
+
+            errorDump(charArr)
+
+            if not "abcdefghi".contains(charArr[currentPos]):
+              echo "Error at pos: ",currentPos+1," Incorrect character!"
+            else:
+              echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
         else:
-          echo "Error at pos: ",currentPos+1," Should be ."
+          errorDump(charArr)
 
+          if not ".".contains(charArr[currentPos]):
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+              
       else:
-        echo "Error at pos: ",currentPos+1," Should be 1 - 9"
 
-    #Close first
+        errorDump(charArr)
+
+        if not "123456789".contains(charArr[currentPos]):
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
     else:
-      echo "Error at pos: ",currentPos+1," Should be a to i"
+      errorDump(charArr)
+
+      if not "abcdefghi".contains(charArr[currentPos]):
+        echo "Error at pos: ",currentPos+1," Incorrect character!"
+      else:
+        echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 #fails the size check
   else:
-    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
+    errorDump(charArr)
+    echo "Unexpected end of program at pos : ",currentPos+1
 
 
 proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
@@ -685,13 +789,13 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
     echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
 
 
-proc errorDump(charArray : seq[char],ErrorPos : int)  =
+proc errorDump(charArray : seq[char])  =
 
   var arr : seq[char] = charArray
   var count : int = 1
 
   for i in arr:
-    echo i, " at POS ", count,"\n"
+    echo i, " at POSITION ", count,"\n"
     inc count
 
 
