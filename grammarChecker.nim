@@ -553,34 +553,102 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
                       else:
                         if charArr[currentPos+1] != ',' :
 
-                          echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+                          errorDump(charArr)
+                          echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+
 
                         else:
 
+                          errorDump(charArr)
                           echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
 
                     else :
-                      echo "failure at tri"
+                      errorDump(charArr)
+                      echo "Error at pos: ", currentPos, " Sudden end of program ??"
                   else:
-                    echo "Error at pos: ", currentPos+1, " Unknown in the eighth position"
+
+                    errorDump(charArr)
+
+                    if not "123456789".contains(charArr[currentPos]):
+                      echo "Error at pos: ",currentPos+1," Incorrect character!"
+                    else:
+                      echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
                 else:
-                  echo "Error at pos: ", currentPos+1, " Unknown in the seventh position"
+
+                  errorDump(charArr)
+
+                  if not "abcdefghi".contains(charArr[currentPos]):
+                    echo "Error at pos: ",currentPos+1," Incorrect character!"
+                  else:
+                    echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
+               
               else:
-                echo "Error at pos: ", currentPos+1, " Unknown in the sixth position"
+
+                errorDump(charArr)
+
+                if not ".".contains(charArr[currentPos]):
+                  echo "Error at pos: ",currentPos+1," Incorrect character!"
+                else:
+                  echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+                
             else:
-              echo "Error at pos: ", currentPos+1, " Unknown in the fifth position"
+              errorDump(charArr)
+
+              if not "123456789".contains(charArr[currentPos]):
+                echo "Error at pos: ",currentPos+1," Incorrect character!"
+              else:
+                echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
           else:
-            echo "Error at pos: ", currentPos+1, " Unknown in the fourth position"
+            errorDump(charArr)
+
+            if not "abcdefghi".contains(charArr[currentPos]):
+              echo "Error at pos: ",currentPos+1," Incorrect character!"
+            else:
+              echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
+           
         else:
-          echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+          errorDump(charArr)
+
+          if not ".".contains(charArr[currentPos]):
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
       else:
-        echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+
+        errorDump(charArr)
+
+        if not "123456789".contains(charArr[currentPos]):
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
+        
     else:
-      echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+
+      errorDump(charArr)
+
+      if not "abcdefghi".contains(charArr[currentPos]):
+        echo "Error at pos: ",currentPos+1," Incorrect character!"
+      else:
+        echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
+   
         
   #fails the size check
   else:
-    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
+    errorDump(charArr)
+    echo "Unexpected end of program at pos : ",currentPos+1
 
 
 #Process for rec command validation
@@ -739,24 +807,44 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
             else:
               if charArr[currentPos+1] != ',' :
 
-                echo "Error at pos ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
+                errorDump(charArr)
+                echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
               else:
-
+                errorDump(charArr)
                 echo "Error at pos: ",currentPos+2, " Expected command but found stop!"
+
           else:
-            echo "failure at axes"
+            errorDump(charArr)
+            echo "Error at pos: ", currentPos, " Sudden end of program ??"
 
         else:
-           echo "Error at pos: ", currentPos+1, " Unknown in the third position"
+          errorDump(charArr)
+
+          if not "123456789".contains(charArr[currentPos]):
+            echo "Error at pos: ",currentPos+1," Incorrect character!"
+          else:
+            echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+          
       else:
-         echo "Error at pos: ", currentPos+1, " Unknown in the second position"
+        errorDump(charArr)
+        if not ".".contains(charArr[currentPos]):
+          echo "Error at pos: ",currentPos+1," Incorrect character!"
+        else:
+          echo "Error at pos: ",currentPos+1," Nothing to follow through..."
+
+
     else:
-       echo "Error at pos: ", currentPos+1, " Unknown in the first position"
+      errorDump(charArr)
+      if not "abcdefghi".contains(charArr[currentPos]):
+        echo "Error at pos: ",currentPos+1," Incorrect character!"
+      else:
+        echo "Error at pos: ",currentPos+1," Nothing to follow through..."
        
 #fails the size check
   else:
-    echo "Unexpected end of program at pos : ",currentPos+1, " The command was prob wrong"
+    errorDump(charArr)
+    echo "Unexpected end of program at pos : ",currentPos+1
 
 
 
