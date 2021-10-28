@@ -172,7 +172,8 @@ while status:
     status = false
 
   of "HELP":
-    echo "Generating command"
+    echo "To display the grammar again, type \"GRAMMAR\"\n"
+    echo "To terminate the program, type \"EXIT\"\n"
 
   of "GRAMMAR":
     grammar()

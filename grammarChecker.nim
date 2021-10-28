@@ -105,11 +105,11 @@ proc buildingBack (charArr : seq[char]) : seq[string] =
 
   #Checks to see if the charArr has the word "go"
   #charArr.len()-1 is used to prevent crashes if there is no stop 
-  if charArr[currentPos] == 'g' and currentPos < charArr.len()-1 :
+  if charArr[currentPos] == 'g' and currentPos < charArr.len()-1 : #Validate the command and we are not at the end
 
     inc currentPos
 
-    if charArr[currentPos] == 'o' and currentPos < charArr.len()-1 :
+    if charArr[currentPos] == 'o' and currentPos < charArr.len()-1 : #Validate the command and we are not at the end
 
       #Checks to see if we immediately close the command and throw an error
       if charArr[currentPos+1] == 's':
@@ -148,43 +148,45 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
       inc currentPos
 
-      if charArr[currentPos] == 'e' and currentPos < charArr.len()-1:
+      if charArr[currentPos] == 'e' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         inc currentPos
 
-        if charArr[currentPos] == 'c' and currentPos < charArr.len()-1:
+        if charArr[currentPos] == 'c' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
 
           #add rec to the string array
           savedString.add $"rec"
           inc currentPos
           #call to process rec command
-          processRecCommand(charArr,currentPos)
+          processRecCommand(charArr,currentPos) 
 
         else:
            
           errorDump(charArr)
-
+          #The following position doenst match the accepted values
           if charArr[currentPos] != 'c':
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
           
       else:
 
         errorDump(charArr)
-
+        #The following position doenst match the accepted values
         if charArr[currentPos] != 'e':
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
     of 't':
       inc currentPos
 
-      if charArr[currentPos] == 'r' and currentPos < charArr.len()-1:
+      if charArr[currentPos] == 'r' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         inc currentPos
 
-        if charArr[currentPos] == 'i' and currentPos < charArr.len()-1:
+        if charArr[currentPos] == 'i' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
 
           savedString.add $"tri"
           inc currentPos
@@ -192,18 +194,22 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
           processTriCommand(charArr,currentPos) 
         else:
           errorDump(charArr)
-
+          #The following position doenst match the accepted values
           if charArr[currentPos] != 'i':
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
                
       else:
 
         errorDump(charArr)
+
+        #The following position doenst match the accepted values
         if charArr[currentPos] != 'r':
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
        
 
@@ -211,28 +217,32 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
       inc currentPos
 
-      if charArr[currentPos] == 'i' and currentPos < charArr.len()-1:
+      if charArr[currentPos] == 'i' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         inc currentPos
 
-        if charArr[currentPos] == 'r' and currentPos < charArr.len()-1:
+        if charArr[currentPos] == 'r' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
           savedString.add $"cir"
           inc currentPos
-                    #call to process rec command
+          #call to process cir command
           processCirCommand(charArr,currentPos) #//CHANGE THIS 
 
         else:            
           errorDump(charArr)
 
           if charArr[currentPos] != 'r':
+            #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
       else:
         errorDump(charArr)
         if charArr[currentPos] != 'i':
+          #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
@@ -240,24 +250,26 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
     of 'a':
       inc currentPos
 
-      if charArr[currentPos] == 'x' and currentPos < charArr.len()-1:
+      if charArr[currentPos] == 'x' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         inc currentPos
 
-        if charArr[currentPos] == 'e' and currentPos < charArr.len()-1:
+        if charArr[currentPos] == 'e' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
           inc currentPos
 
-          if charArr[currentPos] == 's' and currentPos < charArr.len()-1:  
+          if charArr[currentPos] == 's' and currentPos < charArr.len()-1:  #Validate the command and we are not at the end
             savedString.add $"axes"
             inc currentPos
-                  #call to process rec command
-            processAxesCommand(charArr,currentPos) #//CHANGE THIS 
+            #call to process axes command
+            processAxesCommand(charArr,currentPos) 
 
           else:            
             errorDump(charArr)
 
             if charArr[currentPos] != 's':
+              #The following position doenst match the accepted values
               echo "Error at pos: ",currentPos+1," Incorrect character!"
             else:
+            #The program ends abruptly 
               echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
         else:
@@ -265,8 +277,10 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
           errorDump(charArr)
 
           if charArr[currentPos] != 'e':
+            #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
           
@@ -275,30 +289,34 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
         errorDump(charArr)
 
         if charArr[currentPos] != 'x':
+          #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
     of 'f':
       inc currentPos
 
-      if charArr[currentPos] == 'i' and currentPos < charArr.len()-1:
+      if charArr[currentPos] == 'i' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         inc currentPos
 
-        if charArr[currentPos] == 'l' and currentPos < charArr.len()-1:
+        if charArr[currentPos] == 'l' and currentPos < charArr.len()-1: #Validate the command and we are not at the end
           inc currentPos
 
-          if charArr[currentPos] == 'l' and currentPos < charArr.len()-1:            
+          if charArr[currentPos] == 'l' and currentPos < charArr.len()-1: #Validate the command and we are not at the end           
             savedString.add $"fill"
             inc currentPos
-                    #call to process rec command
+                    #call to process fill command
             processFillCommand(charArr,currentPos) #//CHANGE THIS 
           else:
             errorDump(charArr)
 
             if charArr[currentPos] != 'l':
+              #The following position doenst match the accepted values
               echo "Error at pos: ",currentPos+1," Incorrect character!"
             else:
+            #The program ends abruptly 
               echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
         else:
@@ -306,8 +324,10 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
           errorDump(charArr)
 
           if charArr[currentPos] != 'l':
+            #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
       else:
@@ -315,8 +335,10 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
         errorDump(charArr)
 
         if charArr[currentPos] != 'i':
+          #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
       
     of 's':
@@ -329,7 +351,7 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
           inc currentPos
 
 
-          if charArr[currentPos] == 'p' and currentPos == charArr.len()-1:
+          if charArr[currentPos] == 'p' and currentPos == charArr.len()-1: #Validate the command and we are not at the end
             savedString.add $"stop"
             
             derivation(savedString)
@@ -344,7 +366,7 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
 
             #Graphic goes here
             processGraphic(savedString)  
-            echo "Press Enter to continue... \n"
+            echo "Press Enter to continue... check folder for result \n"
             var buffer2 : string = readLine(stdin)
 
 
@@ -367,17 +389,7 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
                 
             
             ]#
-
-            echo "If you are here then you made it into the end of the program"
-
-
-
-
-
             
-
-     
-
             #CALL FUNCTIONS ABOVE THIS LINE
 
           elif charArr[currentPos] != 'p':
@@ -406,26 +418,27 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
   if currentPos < charArr.len()-1 :
 
-    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
       recStringCmd = recStringCmd & charArr[currentPos]
       inc currentPos
 
-      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         recStringCmd = recStringCmd & charArr[currentPos]
         inc currentPos
 
-        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
           recStringCmd = recStringCmd & charArr[currentPos]
           inc currentPos
 
-          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
             recStringCmd = recStringCmd & charArr[currentPos]
             inc currentPos
 
-            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
               #then we should have continue the command
               recStringCmd = recStringCmd & charArr[currentPos]
 
+              #checks to see if "stop" was included
               if currentPos < charArr.len()-4:
 
                 if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
@@ -445,6 +458,7 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
 
 
                     errorDump(charArr)
+                    #The following position doenst match the accepted values
                     echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
                   else:
@@ -462,8 +476,10 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
               errorDump(charArr)
 
               if not "123456789".contains(charArr[currentPos]):
+                #The following position doenst match the accepted values
                 echo "Error at pos: ",currentPos+1," Incorrect character!"
               else:
+              #The program ends abruptly 
                 echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
           else:
@@ -471,16 +487,20 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
             errorDump(charArr)
 
             if not "abcdefghi".contains(charArr[currentPos]):
+              #The following position doenst match the accepted values
               echo "Error at pos: ",currentPos+1," Incorrect character!"
             else:
+            #The program ends abruptly 
               echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
         else:
           errorDump(charArr)
 
           if not ".".contains(charArr[currentPos]):
+            #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
               
       else:
@@ -488,16 +508,20 @@ proc processRecCommand(charArr : seq[char],currentPosIndex : int) =
         errorDump(charArr)
 
         if not "123456789".contains(charArr[currentPos]):
+        #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
     else:
       errorDump(charArr)
 
       if not "abcdefghi".contains(charArr[currentPos]):
+      #The following position doenst match the accepted values
         echo "Error at pos: ",currentPos+1," Incorrect character!"
       else:
+      #The program ends abruptly 
         echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 #fails the size check
@@ -517,44 +541,45 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
   if currentPos < charArr.len()-1 :
 
 
-    if "abcdefghi".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
+    if "abcdefghi".contains(charArr[currentPos])  and currentPos < charArr.len()-1: #Validate the command and we are not at the end
       triStringCmd = triStringCmd & charArr[currentPos]
       inc currentPos
 
 
-      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         triStringCmd = triStringCmd & charArr[currentPos]
         inc currentPos
 
 
-        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
-          triStringCmd = triStringCmd & charArr[currentPos]
+        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
+          triStringCmd = triStringCmd & charArr[currentPos] 
           inc currentPos
 
-          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
             triStringCmd = triStringCmd & charArr[currentPos]
             inc currentPos
 
 
-            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
               triStringCmd = triStringCmd & charArr[currentPos]
               inc currentPos
 
 
-              if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+              if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
                 triStringCmd = triStringCmd & charArr[currentPos]
                 inc currentPos
 
-                if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+                if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
                   triStringCmd = triStringCmd & charArr[currentPos]
                   inc currentPos
                 
 
-                  if "123456789".contains(charArr[currentPos])  and currentPos < charArr.len()-1:
+                  if "123456789".contains(charArr[currentPos])  and currentPos < charArr.len()-1: #Validate the command and we are not at the end
                 
                     #then we should have continue the command
                     triStringCmd = triStringCmd & charArr[currentPos]
 
+                     #checks to see if "stop" was included
                     if currentPos < charArr.len()-4:
 
                       if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
@@ -573,6 +598,7 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
                         if charArr[currentPos+1] != ',' :
 
                           errorDump(charArr)
+                          #The following position doenst match the accepted values
                           echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
 
@@ -589,8 +615,10 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
                     errorDump(charArr)
 
                     if not "123456789".contains(charArr[currentPos]):
+                    #The following position doenst match the accepted values
                       echo "Error at pos: ",currentPos+1," Incorrect character!"
                     else:
+                    #The program ends abruptly 
                       echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
@@ -599,8 +627,10 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
                   errorDump(charArr)
 
                   if not "abcdefghi".contains(charArr[currentPos]):
+                  #The following position doenst match the accepted values
                     echo "Error at pos: ",currentPos+1," Incorrect character!"
                   else:
+                  #The program ends abruptly 
                     echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
@@ -610,24 +640,30 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
                 errorDump(charArr)
 
                 if not ".".contains(charArr[currentPos]):
+                #The following position doenst match the accepted values
                   echo "Error at pos: ",currentPos+1," Incorrect character!"
                 else:
+                #The program ends abruptly 
                   echo "Error at pos: ",currentPos+1," Nothing to follow through..."
                 
             else:
               errorDump(charArr)
 
               if not "123456789".contains(charArr[currentPos]):
+              #The following position doenst match the accepted values
                 echo "Error at pos: ",currentPos+1," Incorrect character!"
               else:
+              #The program ends abruptly 
                 echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
           else:
             errorDump(charArr)
 
             if not "abcdefghi".contains(charArr[currentPos]):
+            #The following position doenst match the accepted values
               echo "Error at pos: ",currentPos+1," Incorrect character!"
             else:
+            #The program ends abruptly 
               echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
@@ -636,8 +672,10 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
           errorDump(charArr)
 
           if not ".".contains(charArr[currentPos]):
+          #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
@@ -646,8 +684,10 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
         errorDump(charArr)
 
         if not "123456789".contains(charArr[currentPos]):
+        #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
@@ -657,8 +697,10 @@ proc processTriCommand(charArr : seq[char],currentPosIndex : int) =
       errorDump(charArr)
 
       if not "abcdefghi".contains(charArr[currentPos]):
+      #The following position doenst match the accepted values
         echo "Error at pos: ",currentPos+1," Incorrect character!"
       else:
+      #The program ends abruptly 
         echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
@@ -682,26 +724,26 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
 
   if currentPos < charArr.len()-1 :
 
-    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
       cirStringCmd = cirStringCmd & charArr[currentPos]
       inc currentPos
 
-      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+      if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         cirStringCmd = cirStringCmd & charArr[currentPos]
         inc currentPos
 
-        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+        if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
           cirStringCmd = cirStringCmd & charArr[currentPos]
           inc currentPos
 
-          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+          if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
             cirStringCmd = cirStringCmd & charArr[currentPos]
             inc currentPos
 
-            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+            if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
               #then we should have continue the command
               cirStringCmd = cirStringCmd & charArr[currentPos]
-
+              #checks to see if "stop" was included
               if currentPos < charArr.len()-4:
 
                 if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
@@ -721,6 +763,7 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
 
 
                     errorDump(charArr)
+                    #The following position doenst match the accepted values
                     echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
                   else:
@@ -738,8 +781,10 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
               errorDump(charArr)
 
               if not "123456789".contains(charArr[currentPos]):
+              #The following position doenst match the accepted values
                 echo "Error at pos: ",currentPos+1," Incorrect character!"
               else:
+              #The program ends abruptly 
                 echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
           else:
@@ -747,16 +792,20 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
             errorDump(charArr)
 
             if not "abcdefghi".contains(charArr[currentPos]):
+            #The following position doenst match the accepted values
               echo "Error at pos: ",currentPos+1," Incorrect character!"
             else:
+            #The program ends abruptly 
               echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
         else:
           errorDump(charArr)
 
           if not ".".contains(charArr[currentPos]):
+          #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
               
       else:
@@ -764,16 +813,20 @@ proc processCirCommand(charArr : seq[char],currentPosIndex : int) =
         errorDump(charArr)
 
         if not "123456789".contains(charArr[currentPos]):
+        #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
     else:
       errorDump(charArr)
 
       if not "abcdefghi".contains(charArr[currentPos]):
+      #The following position doenst match the accepted values
         echo "Error at pos: ",currentPos+1," Incorrect character!"
       else:
+      #The program ends abruptly 
         echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 #fails the size check
@@ -794,24 +847,24 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
   if currentPos < charArr.len()-1 :
 
 
-    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
       axesStringCmd = axesStringCmd & charArr[currentPos]
       inc currentPos
 
 
-      if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+      if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         axesStringCmd = axesStringCmd & charArr[currentPos]
         inc currentPos
   
 
-        if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+        if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
 
           #then we should have continue the command
           axesStringCmd = axesStringCmd & charArr[currentPos]
-
+           #checks to see if "stop" was included
           if currentPos < charArr.len()-4:
 
-            if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
+            if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's': #Validate the command and we are not at the end
               axesStringCmd = axesStringCmd & charArr[currentPos+1]
               savedString.add axesStringCmd
               inc currentPos
@@ -827,6 +880,7 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
               if charArr[currentPos+1] != ',' :
 
                 errorDump(charArr)
+                #The following position doenst match the accepted values
                 echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
               else:
@@ -841,23 +895,29 @@ proc processAxesCommand(charArr : seq[char],currentPosIndex : int) =
           errorDump(charArr)
 
           if not "123456789".contains(charArr[currentPos]):
+          #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
           
       else:
         errorDump(charArr)
         if not ".".contains(charArr[currentPos]):
+        #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
     else:
       errorDump(charArr)
       if not "abcdefghi".contains(charArr[currentPos]):
+      #The following position doenst match the accepted values
         echo "Error at pos: ",currentPos+1," Incorrect character!"
       else:
+      #The program ends abruptly 
         echo "Error at pos: ",currentPos+1," Nothing to follow through..."
        
 #fails the size check
@@ -878,21 +938,22 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
   if currentPos < charArr.len()-1 :
 
 
-    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+    if "abcdefghi".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
       fillStringCmd = fillStringCmd & charArr[currentPos]
       inc currentPos
 
 
-      if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+      if ".".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
         fillStringCmd = fillStringCmd & charArr[currentPos]
         inc currentPos
   
 
-        if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1:
+        if "123456789".contains(charArr[currentPos]) and currentPos < charArr.len()-1: #Validate the command and we are not at the end
 
           #then we should have continue the command
           fillStringCmd = fillStringCmd & charArr[currentPos]
 
+           #checks to see if "stop" was included
           if currentPos < charArr.len()-4:
 
             if charArr[currentPos+1] == ',' and charArr[currentPos+2] != 's':
@@ -911,6 +972,7 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
               if charArr[currentPos+1] != ',' :
 
                 errorDump(charArr)
+                #The following position doenst match the accepted values
                 echo "Error at pos : ",currentPos+2, " Incorrect character; Expected , but found ",charArr[currentPos+1] 
 
               else:
@@ -925,23 +987,29 @@ proc processFillCommand(charArr : seq[char],currentPosIndex : int) =
           errorDump(charArr)
 
           if not "123456789".contains(charArr[currentPos]):
+          #The following position doenst match the accepted values
             echo "Error at pos: ",currentPos+1," Incorrect character!"
           else:
+          #The program ends abruptly 
             echo "Error at pos: ",currentPos+1," Nothing to follow through..."
           
       else:
         errorDump(charArr)
         if not ".".contains(charArr[currentPos]):
+        #The following position doenst match the accepted values
           echo "Error at pos: ",currentPos+1," Incorrect character!"
         else:
+        #The program ends abruptly 
           echo "Error at pos: ",currentPos+1," Nothing to follow through..."
 
 
     else:
       errorDump(charArr)
       if not "abcdefghi".contains(charArr[currentPos]):
+      #The following position doenst match the accepted values
         echo "Error at pos: ",currentPos+1," Incorrect character!"
       else:
+      #The program ends abruptly 
         echo "Error at pos: ",currentPos+1," Nothing to follow through..."
        
 #fails the size check

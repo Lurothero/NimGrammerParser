@@ -23,7 +23,7 @@ proc parseTree*(innerCommand : seq[string]) =
     #Separate Commands after ever ',' => array of strings
     #var commands = removeWhiteSpace.split(',')
     #commands = commands.reversed()
-    echo "this is me", commands
+    #echo "this is me", commands
 
     # Counter for # string in the array
     var counter = len(commands)
