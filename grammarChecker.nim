@@ -4,6 +4,7 @@ import std/[algorithm]
 
 #Other files 
 include derivation
+include Graphic
 
 #Globar Variables - Reset on call
 var currentPos : int = 0
@@ -334,6 +335,15 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
             echo "Press Enter to continue... \n"
             var buffer : string = readLine(stdin)
 
+            #Parse Tree Goes here
+            echo "Press Enter to continue... \n"
+            var buffer1 : string = readLine(stdin)
+
+
+            #Graphic goes here
+            processGraphic(savedString)  
+            echo "Press Enter to continue... \n"
+            var buffer2 : string = readLine(stdin)
 
 
             
@@ -944,7 +954,7 @@ proc errorDump(charArray : seq[char])  =
   var count : int = 1
 
   for i in arr:
-    echo i, " at POSITION ", count,"\n"
+    echo i, " at POSITION ", count
     inc count
 
 

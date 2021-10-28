@@ -3,6 +3,14 @@ include grammarChecker
 #   CMPS3111 Programming Project 2
 #   Due Date 28/10/2021
 
+#[
+  To see Graphic output 
+    1) Navigate to shell
+    2) Enter this command: nimble install pixie
+    3) You should see : Success: pixie installed successfully.
+
+]#
+
 #Printing Grammar aa
 proc grammar() =
     echo "\n"
@@ -159,8 +167,6 @@ while status:
     for each in testArr:
       getInput(each)
 
-
-
   of "EXIT":
     echo "Leave the program \n"
     status = false
@@ -176,7 +182,4 @@ while status:
 
 
 #end of while
-
-
 echo "Program Terminated...\n\n\n\n"
-

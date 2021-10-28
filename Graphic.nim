@@ -7,6 +7,9 @@ import std/math
 
 let image = newImage(511, 511)
 image.fill(rgb(255, 255, 255))
+var
+  fill: seq[float]  #holds the fill vertices
+  counter = 0
 
 #########################################################################
 #Draw grid lines with a scale of 16 (512x512) and point/dot in the center
@@ -66,6 +69,7 @@ proc drawCircle(x, y, x2, y2: float)=
   let centerPath = newPath()
   let linePath = newPath()
   let pointPath = Path()
+  let ctx = newContext(image)
   
   #creates and draws a line from center (x, y) to the vertex (x2, y2)
   linePath.moveTo(cx, cy)
@@ -77,6 +81,17 @@ proc drawCircle(x, y, x2, y2: float)=
   #Creates and draw circle path given center and point
   circlePath.ellipse(cx, cy, rx, ry)
   let circleImage = newImage(511, 511)
+
+  #Checks if the fill vertices (fill[]) are in the shape area
+  var i = 0
+  if fill.len > 0:
+    while i < fill.len-1:
+      if ctx.isPointInPath(circlePath, vec2(fill[i], fill[i+1])):
+        circleImage.fillPath(circlePath, rgb(255, 255, 153))
+        break
+      else:
+        i = i + 2 
+
   circleImage.strokePath(circlePath, rgb(0, 0, 102))
   image.draw(circleImage)
 
@@ -92,28 +107,13 @@ proc drawCircle(x, y, x2, y2: float)=
   pointImage.fillPath(pointPath, rgb(0, 0, 102))  
   image.draw(pointImage)
 
-#Fill an area given atleast one point
-proc fillArea()=
-  let area = newPath()
-  let areaImage = newImage(511, 511)
-  let
-    px = 100.0
-    py = 100.0
-    px2 = 200.0
-    py2 = 200.0
-    clockwise = true
-
-  area.rect(px, py, px2, py2, clockwise)  
-  areaImage.fillPath(area, rgb(255, 0, 102))
-  image.draw(areaImage)
-
 
 ####################################################
 #Draw x and y axes where axes ends at x and y values
 proc drawAxes(xy: string)=
   var font = readFont("Roboto-Regular_1.ttf")
   font.size = 16
-
+  
   var num = 230.0
   var xnum = 268.0
   var abc = "abcdefghi"
@@ -218,6 +218,8 @@ proc drawRectangle(x1, y1, x2, y2: float)=
   let rectPath = newPath()
   let p1Path = Path()
   let p2Path = Path()
+  let ctx = newContext(image)
+
   let
     rex = x1
     rey = y1
@@ -245,15 +247,27 @@ proc drawRectangle(x1, y1, x2, y2: float)=
 
   rectPath.rect(rex, rey, rew, reh, clockwise)
   let rectangleImage = newImage(511, 511)
-  rectangleImage.strokePath(rectPath, rgb(0, 0, 102))
 
+  var i = 0
+
+  #Checks if the fill vertices (fill[]) are in the shape area
+  if fill.len > 0:
+    while i < fill.len-1:
+      if ctx.isPointInPath(rectPath, vec2(fill[i], fill[i+1])):
+        rectangleImage.fillPath(rectPath, rgb(255, 255, 153))
+        break
+      else:
+        i = i + 2        
+  
+  rectangleImage.strokePath(rectPath, rgb(0, 0, 102))
   image.draw(rectangleImage)
 
 ###########################################################
 #Draws triangle based on three coordinates (x,y)
 proc drawTriangle(x, y, x2, y2, x3, y3: float)=
   let linePath = newPath()
-  let lineImage = newImage(511, 511)  
+  let lineImage = newImage(511, 511)
+  let ctx = newContext(image)  
 
   let
     tx1 = x
@@ -267,7 +281,17 @@ proc drawTriangle(x, y, x2, y2, x3, y3: float)=
   linePath.lineTo(tx2, ty2)  
   linePath.lineTo(tx3, ty3)  
   linePath.lineTo(tx1, ty1)
-  linePath.closePath()  
+  linePath.closePath() 
+
+  #Checks if the fill vertices (fill[]) are in the shape area
+  var i = 0
+  if fill.len > 0:
+    while i < fill.len-1:
+      if ctx.isPointInPath(linePath, vec2(fill[i], fill[i+1])):
+        lineImage.fillPath(linePath, rgb(255, 255, 153))
+        break
+      else:
+        i = i + 2  
 
   lineImage.strokePath(linePath, rgb(0, 0, 102))
 
@@ -304,9 +328,19 @@ proc convertToPixel(vertex, axes: string): float=
 proc processGraphic(arr: seq[string])= 
   drawGrid()
   for i in 0..arr.len-1:
+    if arr[i] == "fill":
+      var temp = arr[i+1]  #contains: x.y
+      var xy = $temp[0]
+      xy.add($temp[2])    
+      let x = convertToPixel(xy, "x")
+      let y = convertToPixel(xy, "y")      
+      fill.add(x)
+      fill.add(y)
+      
+  for i in 0..arr.len-1:
     if arr[i] == "axes":      
       var temp = arr[i+1]
-      var xy = $temp    #this should contain x.y  
+      var xy = $temp    #this will contain: "x.y"
       drawAxes(xy)
       if arr[i+2] == "stop":
         break  
@@ -346,13 +380,10 @@ proc processGraphic(arr: seq[string])=
       drawCircle(x1, y1, x2, y2)  
       if arr[i+2] == "stop":  #no need to continue looping
         break
-           
-  image.writeFile("graphic.png") 
-
-
-##################testing all the procedures#####################
-#var
-  #arrTesting:   seq[string] 
-
-#arrTesting = @["go", "rec", "c6.f3", "cir", "d2.d5", "tri", "c9.a6.e6","axes", "i9", "stop"]
-#processGraphic(arrTesting)
+  #generates different file names     
+  var name = "images/graphic"  
+  counter = counter + 1 
+  name.add($counter)
+  name.add(".png")       
+  image.writeFile(name)         
+  
