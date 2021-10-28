@@ -5,6 +5,7 @@ import std/[algorithm]
 #Other files 
 include derivation
 include Graphic
+include tree
 
 #Globar Variables - Reset on call
 var currentPos : int = 0
@@ -336,6 +337,7 @@ proc checkCmd (charArr : seq[char],currentPosIndex : int) =
             var buffer : string = readLine(stdin)
 
             #Parse Tree Goes here
+            parseTree(savedString)
             echo "Press Enter to continue... \n"
             var buffer1 : string = readLine(stdin)
 
